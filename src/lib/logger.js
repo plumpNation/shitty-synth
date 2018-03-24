@@ -2,7 +2,7 @@ import { createLogger } from 'browser-bunyan'
 
 const logger = createLogger({
   name: 'client-logger',
-  level: 'debugger'
+  level: 'debug'
 })
 
 export default logger
