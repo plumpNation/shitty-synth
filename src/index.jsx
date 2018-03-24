@@ -6,7 +6,4 @@ import Main from './Main'
 
 const mountNode = document.querySelector('main')
 
-ReactDOM.render(
-  <Main />,
-  mountNode
-)
+ReactDOM.render(<Main />, mountNode)

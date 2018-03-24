@@ -1,31 +1,42 @@
+import logger from '../../lib/logger'
 import React from 'react'
 
+import OscillatorSelect from '../inputs/OscillatorSelect'
+import WaveLengthRange from '../inputs/WaveLengthRange'
+
 class SubSynth extends React.Component {
+  /** @type {Synth.SynthProps} */
+  static defaultProps = {
+    type: 'square'
+  }
+
+  setOscillator (e) {
+    /** @type {Synth.OscillatorType} */
+    const type = e.target.value
+
+    this.setState({type})
+
+    logger.debug('SubSynth: set oscillator to ' + type)
+  }
+
   render (props, state) {
-    return <section className='subsynth'>
-      <h2>Sub Synth</h2>
+    logger.debug('SubSynth: rendering')
 
-      <section className='oscillator-controls'>
+    return (
+      <section className='subsynth'>
+        <h2>Sub Synth</h2>
 
-        <h3>Oscillator</h3>
+        <section className='oscillator-controls'>
 
-        <label>
-          <span>Volume</span>
-          <input type='range' />
-        </label>
+          <h3>Oscillator</h3>
 
-        <label>
-          <span>Type</span>
-          <select className='wave-type'>
-            <option value='square'>Square</option>
-            <option value='saw'>Saw</option>
-            <option value='round'>Round</option>
-          </select>
-        </label>
+          <WaveLengthRange />
+          <OscillatorSelect value={this.props.type} />
+
+        </section>
 
       </section>
-
-    </section>
+    )
   }
 }
 
