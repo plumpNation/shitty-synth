@@ -2,12 +2,12 @@ import React from 'react'
 import SubSynth from './modules/synths/SubSynth'
 import logger from './lib/logger'
 
-export class Main extends React.Component {
+export class App extends React.Component {
   render () {
-    logger.debug('rendering Main')
+    logger.debug('App: rendering')
 
     return <SubSynth />
   }
 }
 
-export default Main
+export default App

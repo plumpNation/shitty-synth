@@ -2,8 +2,8 @@ import './index.styl'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Main from './Main'
+import App from './App'
 
 const mountNode = document.querySelector('main')
 
-ReactDOM.render(<Main />, mountNode)
+ReactDOM.render(<App />, mountNode)
