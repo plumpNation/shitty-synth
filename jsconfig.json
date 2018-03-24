@@ -2,7 +2,8 @@
     "compilerOptions": {
         "baseUrl": ".",
         "checkJs": true,
-        "target": "ESNext"
+        "target": "ESNext",
+        "jsx": "preserve"
     },
 
     "exclude": [
