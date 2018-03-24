@@ -4,7 +4,7 @@ import logger from '../../lib/logger'
 class OscillatorSelect extends React.Component {
   /** @type {Synth.OscillatorSelectProps} */
   static defaultProps = {
-    type: 'square'
+    value: 'square'
   }
 
   constructor (props) {
@@ -12,16 +12,16 @@ class OscillatorSelect extends React.Component {
 
     /** @type {Synth.OscillatorSelectState} */
     this.state = {
-      type: props.type
+      value: props.value
     }
   }
 
   setWaveType (e) {
-    const type = e.target.value
+    const value = e.target.value
 
-    logger.debug('OscillatorSelect: setting type ' + type)
+    logger.debug('OscillatorSelect: setting type ' + value)
 
-    this.setState({type})
+    this.setState({value})
   }
 
   render () {
@@ -29,7 +29,7 @@ class OscillatorSelect extends React.Component {
 
     return (
       <label>
-        <span>Type: {this.state.type}</span>
+        <span>Type: {this.state.value}</span>
         <select className='wave-type' onChange={event => this.setWaveType(event)}>
           <option value='square'>Square</option>
           <option value='saw'>Saw</option>

@@ -4,7 +4,7 @@ import logger from '../../lib/logger'
 class WaveLengthRange extends React.Component {
   /** @type {Synth.WaveLengthRangeProps} */
   static defaultProps = {
-    waveLength: 50
+    value: 50
   }
 
   constructor (props) {
@@ -12,17 +12,17 @@ class WaveLengthRange extends React.Component {
 
     /** @type {Synth.WaveLengthRangeState} */
     this.state = {
-      waveLength: props.waveLength
+      value: props.value
     }
   }
 
   setWaveLength (e) {
     /** @type {Synth.WaveLength} */
-    const waveLength = e.target.value
+    const value = e.target.value
 
-    this.setState({waveLength})
+    this.setState({value})
 
-    logger.debug('WaveLengthRange: wavelength set to ' + waveLength)
+    logger.debug('WaveLengthRange: wavelength set to ' + value)
   }
 
   render () {
@@ -30,7 +30,7 @@ class WaveLengthRange extends React.Component {
 
     return (
       <label>
-        <span>Wave length: {this.state.waveLength}</span>
+        <span>Wave length: {this.state.value}</span>
         <input type='range' onChange={event => this.setWaveLength(event)} />
       </label>
     )

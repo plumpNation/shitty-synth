@@ -7,16 +7,17 @@ import WaveLengthRange from '../inputs/WaveLengthRange'
 class SubSynth extends React.Component {
   /** @type {Synth.SynthProps} */
   static defaultProps = {
-    type: 'square'
+    oscillatorType: 'square',
+    waveLength: 50
   }
 
-  setOscillator (e) {
-    /** @type {Synth.OscillatorType} */
-    const type = e.target.value
+  constructor (props) {
+    super(props)
 
-    this.setState({type})
-
-    logger.debug('SubSynth: set oscillator to ' + type)
+    this.state = {
+      oscillatorType: props.oscillatorType,
+      waveLength: props.waveLength
+    }
   }
 
   render (props, state) {
@@ -25,16 +26,11 @@ class SubSynth extends React.Component {
     return (
       <section className='subsynth'>
         <h2>Sub Synth</h2>
-
         <section className='oscillator-controls'>
-
           <h3>Oscillator</h3>
-
-          <WaveLengthRange />
-          <OscillatorSelect value={this.props.type} />
-
+          <WaveLengthRange value={this.state.waveLength} />
+          <OscillatorSelect value={this.state.oscillatorType} />
         </section>
-
       </section>
     )
   }

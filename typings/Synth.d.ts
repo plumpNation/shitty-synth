@@ -6,17 +6,18 @@ declare namespace Synth {
   type WaveLength = number;
 
   interface SynthProps {
-    type?: OscillatorType
+    oscillatorType?: OscillatorType,
+    waveLength?: WaveLength
   }
 
   interface OscillatorSelectProps {
-    type?: OscillatorType
+    value?: OscillatorType
   }
 
   interface OscillatorSelectState extends OscillatorSelectProps {}
 
   interface WaveLengthRangeProps {
-    waveLength?: WaveLength
+    value?: WaveLength
   }
 
   interface WaveLengthRangeState extends WaveLengthRangeProps {}
