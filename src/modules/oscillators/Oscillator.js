@@ -1,22 +1,23 @@
-export default Oscillator;
-
 class Oscillator {
-    constructor(type) {
-        if (!available) {
-            throw new Error('AudioContext unavailable in this browser');
-        }
-
-        this.type = type;
+  constructor (type) {
+    if (!available) {
+      throw new Error('AudioContext unavailable in this browser')
     }
+
+    this.type = type
+    this.oscillator = create()
+  }
 }
 
-function create(scope) {
-    const audio_context = new scope.AudioContext();
-    const oscillator = audio_context.createOscillator();
+function create (scope) {
+  const audioContext = new scope.AudioContext()
+  const oscillator = audioContext.createOscillator()
 
-    return oscillator;
+  return oscillator
 }
 
-function available(scope) {
-    return !!scope.AudioContext;
+function available (scope) {
+  return !!scope.AudioContext
 }
+
+export default Oscillator

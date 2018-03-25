@@ -1,43 +1,45 @@
 import React from 'react'
 import logger from '../../lib/logger'
 
-class OscillatorSelect extends React.Component {
+const defaultI18n = {
+  SQUARE: 'Square',
+  ROUND: 'Round',
+  SAW: 'Saw'
+}
+
+class OscillatorSelect extends React.PureComponent {
   /** @type {Synth.OscillatorSelectProps} */
   static defaultProps = {
-    value: 'square'
+    value: 'square',
+    i18n: defaultI18n
   }
 
-  constructor (props) {
-    super(props)
-
-    /** @type {Synth.OscillatorSelectState} */
-    this.state = {
-      value: props.value
-    }
-  }
-
-  setWaveType (e) {
-    const value = e.target.value
-
-    logger.debug('OscillatorSelect: setting type ' + value)
-
-    this.setState({value})
-  }
+  onChange = onChange.bind(this)
 
   render () {
     logger.debug('OscillatorSelect: rendering')
 
     return (
-      <label>
-        <span>Type: {this.state.value}</span>
-        <select className='wave-type' onChange={event => this.setWaveType(event)}>
-          <option value='square'>Square</option>
-          <option value='saw'>Saw</option>
-          <option value='round'>Round</option>
-        </select>
-      </label>
+      <div className='oscillator-select'>
+        <label>
+          <span>Type: {this.props.value}</span>
+          <select onChange={this.onChange}>
+            <option value='square'>{this.props.i18n.SQUARE}</option>
+            <option value='saw'>{this.props.i18n.SAW}</option>
+            <option value='round'>{this.props.i18n.ROUND}</option>
+          </select>
+        </label>
+      </div>
     )
   }
 }
 
 export default OscillatorSelect
+
+function onChange (event) {
+  const data = event.target.value
+
+  logger.debug('OscillatorSelect: changed to ' + data)
+
+  this.props.onChange && this.props.onChange(event, data)
+}

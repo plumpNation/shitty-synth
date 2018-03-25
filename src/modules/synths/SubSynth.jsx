@@ -1,39 +1,65 @@
 import logger from '../../lib/logger'
 import React from 'react'
+import { connect } from 'react-redux'
 
 import OscillatorSelect from '../inputs/OscillatorSelect'
-import WaveLengthRange from '../inputs/WaveLengthRange'
+import WavelengthRange from '../inputs/WavelengthRange'
+
+import { oscillatorChanged, wavelengthChanged } from '../synths/synthActions'
+
+const defaultI18n = {
+  SUB_SYNTH: 'Sub synth',
+  OSCILLATOR: 'Oscillator'
+}
 
 class SubSynth extends React.Component {
-  /** @type {Synth.SynthProps} */
+  /** @type {Synth.Props} */
   static defaultProps = {
     oscillatorType: 'square',
-    waveLength: 50
+    wavelength: 50,
+    i18n: defaultI18n
   }
 
-  constructor (props) {
-    super(props)
+  onSelectOscillator = onSelectOscillator.bind(this)
+  onChangeWavelength = onChangeWavelength.bind(this)
 
-    this.state = {
-      oscillatorType: props.oscillatorType,
-      waveLength: props.waveLength
-    }
-  }
-
-  render (props, state) {
+  render () {
     logger.debug('SubSynth: rendering')
 
     return (
       <section className='subsynth'>
-        <h2>Sub Synth</h2>
+        <h2>{this.props.i18n.SUB_SYNTH}</h2>
         <section className='oscillator-controls'>
-          <h3>Oscillator</h3>
-          <WaveLengthRange value={this.state.waveLength} />
-          <OscillatorSelect value={this.state.oscillatorType} />
+          <h3>{this.props.i18n.OSCILLATOR}</h3>
+
+          <WavelengthRange
+            onChange={this.onChangeWavelength}
+            value={this.props.wavelength} />
+
+          <OscillatorSelect
+            onChange={this.onSelectOscillator}
+            value={this.props.oscillatorType} />
+
         </section>
       </section>
     )
   }
 }
 
-export default SubSynth
+function onSelectOscillator (event, oscillatorType) {
+  logger.debug(`SubSynth: ${oscillatorType} oscillator selected`)
+
+  this.setState({oscillatorType})
+}
+
+function onChangeWavelength (event, wavelength) {
+  logger.debug(`SubSynth: wavelength distance now ${wavelength}`)
+
+  this.setState({wavelength})
+}
+
+// Having this at this level, is it a good thing?
+export default connect(state => ({
+  oscillatorType: state.oscillatorType,
+  wavelength: state.wavelength
+}), { oscillatorChanged, wavelengthChanged })(SubSynth)

@@ -1,9 +1,5 @@
-import Oscillator from './Oscillator';
+import Oscillator from './Oscillator'
 
-export default SquareOscillator;
+class SquareOscillator extends Oscillator {}
 
-class SquareOscillator extends Oscillator {
-    constructor() {
-        super();
-    }
-}
+export default SquareOscillator
