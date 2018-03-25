@@ -30,10 +30,6 @@ class SubSynth extends React.PureComponent {
     return Object.assign({}, defaultI18n, this.props.i18n)
   }
 
-  componentWillReceiveProps (props) {
-    logger.debug(props, 'SubSynth.componentWillReceiveProps')
-  }
-
   render () {
     logger.debug('SubSynth.render')
 

@@ -20,10 +20,6 @@ class OscillatorSelect extends React.PureComponent {
     return Object.assign({}, defaultI18n, this.props.i18n)
   }
 
-  componentWillReceiveProps (props) {
-    logger.debug(props, 'OscillatorSelect.componentWillReceiveProps')
-  }
-
   render () {
     logger.debug(this.props, 'OscillatorSelect.render')
 
