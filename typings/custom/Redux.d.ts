@@ -1,7 +1,7 @@
-import redux from 'redux';
+import redux from 'redux'
 
 export = Redux
-export as namespace Redux;
+export as namespace Redux
 
 declare namespace Redux {
   interface Store extends redux.Store {}

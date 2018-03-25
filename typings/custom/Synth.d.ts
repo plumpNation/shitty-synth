@@ -1,11 +1,11 @@
 import redux from 'redux'
-import I18n from './I18n';
+import I18n from './I18n'
 
 export = Synth;
 export as namespace Synth;
 
 declare namespace Synth {
-  type OscillatorType = 'square' | 'round' | 'saw';
+  type OscillatorType = 'square' | 'round' | 'saw'
   type Wavelength = number;
 
   interface Props {
