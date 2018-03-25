@@ -7,39 +7,30 @@ const defaultI18n = {
   SAW: 'Saw'
 }
 
-class OscillatorSelect extends React.PureComponent {
-  /** @type {Synth.OscillatorSelectProps} */
-  static defaultProps = {
-    value: 'square',
-    i18n: defaultI18n
-  }
+/**
+ * @param {Synth.OscillatorSelectProps} props
+ * @property {I18n} props.i18n
+ * @property {Synth.OscillatorType} props.value
+ * @property {Function} props.onChange
+ * @returns {JSX.Element}
+ */
+function OscillatorSelect ({i18n = {}, value = 'square', onChange}) {
+  logger.debug('OscillatorSelect: rendering')
 
-  onChange = onChange.bind(this)
+  i18n = Object.assign({}, defaultI18n, i18n)
 
-  render () {
-    logger.debug('OscillatorSelect: rendering')
-
-    return (
-      <div className='oscillator-select'>
-        <label>
-          <span>Type: {this.props.value}</span>
-          <select onChange={this.onChange}>
-            <option value='square'>{this.props.i18n.SQUARE}</option>
-            <option value='saw'>{this.props.i18n.SAW}</option>
-            <option value='round'>{this.props.i18n.ROUND}</option>
-          </select>
-        </label>
-      </div>
-    )
-  }
+  return (
+    <div className='oscillator-select'>
+      <label>
+        <span>Type: {value}</span>
+        <select onChange={onChange}>
+          <option value='square'>{i18n.SQUARE}</option>
+          <option value='saw'>{i18n.SAW}</option>
+          <option value='round'>{i18n.ROUND}</option>
+        </select>
+      </label>
+    </div>
+  )
 }
 
 export default OscillatorSelect
-
-function onChange (event) {
-  const data = event.target.value
-
-  logger.debug('OscillatorSelect: changed to ' + data)
-
-  this.props.onChange && this.props.onChange(event, data)
-}

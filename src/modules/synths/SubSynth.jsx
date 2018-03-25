@@ -1,11 +1,11 @@
-import logger from '../../lib/logger'
 import React from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 import OscillatorSelect from '../inputs/OscillatorSelect'
 import WavelengthRange from '../inputs/WavelengthRange'
+import {oscillatorChanged, wavelengthChanged} from '../synths/synthActions'
 
-import { oscillatorChanged, wavelengthChanged } from '../synths/synthActions'
+import logger from '../../lib/logger'
 
 const defaultI18n = {
   SUB_SYNTH: 'Sub synth',
@@ -20,9 +20,6 @@ class SubSynth extends React.Component {
     i18n: defaultI18n
   }
 
-  onSelectOscillator = onSelectOscillator.bind(this)
-  onChangeWavelength = onChangeWavelength.bind(this)
-
   render () {
     logger.debug('SubSynth: rendering')
 
@@ -33,11 +30,11 @@ class SubSynth extends React.Component {
           <h3>{this.props.i18n.OSCILLATOR}</h3>
 
           <OscillatorSelect
-            onChange={this.onSelectOscillator}
+            onChange={this.props.onOscillatorChanged}
             value={this.props.oscillatorType} />
 
           <WavelengthRange
-            onChange={this.onChangeWavelength}
+            onChange={this.props.onWavelengthChanged}
             value={this.props.wavelength} />
 
         </section>
@@ -46,20 +43,28 @@ class SubSynth extends React.Component {
   }
 }
 
-function onSelectOscillator (event, oscillatorType) {
-  logger.debug(`SubSynth: ${oscillatorType} oscillator selected`)
-
-  this.setState({oscillatorType})
-}
-
-function onChangeWavelength (event, wavelength) {
-  logger.debug(`SubSynth: wavelength distance now ${wavelength}`)
-
-  this.setState({wavelength})
-}
-
 // Having this at this level, is it a good thing?
-export default connect(state => ({
-  oscillatorType: state.oscillatorType,
-  wavelength: state.wavelength
-}), { oscillatorChanged, wavelengthChanged })(SubSynth)
+export default connect(mapStateToProps, mapDispatchToProps)(SubSynth)
+
+function mapStateToProps (state) {
+  logger.debug('SubSynth: mapping state to props')
+
+  return {
+    oscillatorType: state.oscillatorType,
+    wavelength: state.wavelength
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  logger.debug('SubSynth: mapping dispatch events to props')
+
+  return {
+    onOscillatorChanged: (event) => {
+      dispatch(oscillatorChanged(event.target.value))
+    },
+
+    onWavelengthChanged: (event) => {
+      dispatch(wavelengthChanged(event.target.value))
+    }
+  }
+}

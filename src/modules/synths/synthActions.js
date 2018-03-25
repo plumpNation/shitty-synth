@@ -14,7 +14,7 @@ const WAVELENGTH_CHANGED = 'wavelengthChanged'
  * @returns {Redux.Action}
  */
 function oscillatorChanged (payload) {
-  logger.debug('ACTION: synth.oscillatorChanged')
+  logger.debug('synthActions.oscillatorChanged: ' + payload)
 
   return {
     type: OSCILLATOR_CHANGED,
@@ -27,7 +27,7 @@ function oscillatorChanged (payload) {
  * @returns {Redux.Action}
  */
 function wavelengthChanged (payload) {
-  logger.debug('ACTION: synth.wavelengthChanged')
+  logger.debug('synthActions.wavelengthChanged: ' + payload)
 
   return {
     type: WAVELENGTH_CHANGED,
