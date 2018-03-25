@@ -32,13 +32,13 @@ class SubSynth extends React.Component {
         <section className='oscillator-controls'>
           <h3>{this.props.i18n.OSCILLATOR}</h3>
 
-          <WavelengthRange
-            onChange={this.onChangeWavelength}
-            value={this.props.wavelength} />
-
           <OscillatorSelect
             onChange={this.onSelectOscillator}
             value={this.props.oscillatorType} />
+
+          <WavelengthRange
+            onChange={this.onChangeWavelength}
+            value={this.props.wavelength} />
 
         </section>
       </section>
