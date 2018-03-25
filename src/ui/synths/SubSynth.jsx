@@ -7,8 +7,6 @@ import {oscillatorChanged, wavelengthChanged} from '../synths/synthActions'
 
 import logger from '../../lib/logger'
 
-import SubSynthController from './SubSynthController'
-
 /** @type {Synth.I18n} */
 const defaultI18n = {
   SUB_SYNTH: 'Sub synth',

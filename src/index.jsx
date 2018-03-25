@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 
 import './index.styl'
 
-import store from './modules/state/store'
+import store from './ui/state/store'
 import App from './App'
 
 const mountNode = document.querySelector('main')
