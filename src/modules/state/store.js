@@ -3,28 +3,15 @@ import { createStore, compose, combineReducers } from 'redux'
 import synthReducer from '../synths/synthReducer'
 
 const rootReducer = combineReducers({
-  synthReducer
+  synth: synthReducer
 })
 
-/** @type {Redux.Store} */
 const store = createStore(
   rootReducer,
-  undefined,
+  undefined, // middleware
   compose(
-    devTools()
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 )
 
 export default store
-
-/**
- * @returns {Function}
- */
-function devTools () {
-  /** @type {boolean | void | Function} */
-  const devToolsMiddleware =
-    typeof window.devToolsExtension === 'function' &&
-    window.devToolsExtension()
-
-  return devToolsMiddleware || (f => f)
-}

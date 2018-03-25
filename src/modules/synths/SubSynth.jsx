@@ -7,12 +7,15 @@ import {oscillatorChanged, wavelengthChanged} from '../synths/synthActions'
 
 import logger from '../../lib/logger'
 
+import SubSynthController from './SubSynthController'
+
+/** @type {Synth.I18n} */
 const defaultI18n = {
   SUB_SYNTH: 'Sub synth',
   OSCILLATOR: 'Oscillator'
 }
 
-class SubSynth extends React.Component {
+class SubSynth extends React.PureComponent {
   /** @type {Synth.Props} */
   static defaultProps = {
     oscillatorType: 'square',
@@ -20,22 +23,35 @@ class SubSynth extends React.Component {
     i18n: defaultI18n
   }
 
+  /**
+   * @returns {Synth.I18n}
+   */
+  get i18n () {
+    return Object.assign({}, defaultI18n, this.props.i18n)
+  }
+
+  componentWillReceiveProps (props) {
+    logger.debug(props, 'SubSynth.componentWillReceiveProps')
+  }
+
   render () {
-    logger.debug('SubSynth: rendering')
+    logger.debug('SubSynth.render')
 
     return (
       <section className='subsynth'>
-        <h2>{this.props.i18n.SUB_SYNTH}</h2>
+        <h2>{this.i18n.SUB_SYNTH}</h2>
         <section className='oscillator-controls'>
-          <h3>{this.props.i18n.OSCILLATOR}</h3>
+          <h3>{this.i18n.OSCILLATOR}</h3>
 
           <OscillatorSelect
             onChange={this.props.onOscillatorChanged}
-            value={this.props.oscillatorType} />
+            value={this.props.oscillatorType}
+          />
 
           <WavelengthRange
             onChange={this.props.onWavelengthChanged}
-            value={this.props.wavelength} />
+            value={this.props.wavelength}
+          />
 
         </section>
       </section>
@@ -47,16 +63,16 @@ class SubSynth extends React.Component {
 export default connect(mapStateToProps, mapDispatchToProps)(SubSynth)
 
 function mapStateToProps (state) {
-  logger.debug('SubSynth: mapping state to props')
+  logger.debug(state.synth, 'SubSynth.mapStateToProps')
 
   return {
-    oscillatorType: state.oscillatorType,
-    wavelength: state.wavelength
+    oscillatorType: state.synth.oscillatorType,
+    wavelength: state.synth.wavelength
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  logger.debug('SubSynth: mapping dispatch events to props')
+  logger.debug('SubSynth.mapDispatchToProps')
 
   return {
     onOscillatorChanged: (event) => {

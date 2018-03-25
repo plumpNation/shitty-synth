@@ -4,7 +4,7 @@ import logger from './lib/logger'
 
 export class App extends React.Component {
   render () {
-    logger.debug('App: rendering')
+    logger.debug('App.render')
 
     return <SubSynth />
   }

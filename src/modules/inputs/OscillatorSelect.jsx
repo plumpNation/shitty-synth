@@ -1,36 +1,45 @@
 import React from 'react'
 import logger from '../../lib/logger'
 
+/** @type {Synth.I18n} */
 const defaultI18n = {
   SQUARE: 'Square',
   ROUND: 'Round',
   SAW: 'Saw'
 }
 
-/**
- * @param {Synth.OscillatorSelectProps} props
- * @property {I18n} props.i18n
- * @property {Synth.OscillatorType} props.value
- * @property {Function} props.onChange
- * @returns {JSX.Element}
- */
-function OscillatorSelect ({i18n = {}, value = 'square', onChange}) {
-  logger.debug('OscillatorSelect: rendering')
+class OscillatorSelect extends React.PureComponent {
+  /** @type {Synth.OscillatorSelectProps} */
+  static defaultProps = {
+    i18n: defaultI18n,
+    value: 'square',
+    onChange: event => undefined
+  }
 
-  i18n = Object.assign({}, defaultI18n, i18n)
+  get i18n () {
+    return Object.assign({}, defaultI18n, this.props.i18n)
+  }
 
-  return (
-    <div className='oscillator-select'>
-      <label>
-        <span>Type: {value}</span>
-        <select onChange={onChange}>
-          <option value='square'>{i18n.SQUARE}</option>
-          <option value='saw'>{i18n.SAW}</option>
-          <option value='round'>{i18n.ROUND}</option>
-        </select>
-      </label>
-    </div>
-  )
+  componentWillReceiveProps (props) {
+    logger.debug(props, 'OscillatorSelect.componentWillReceiveProps')
+  }
+
+  render () {
+    logger.debug(this.props, 'OscillatorSelect.render')
+
+    return (
+      <div className='oscillator-select'>
+        <label>
+          <span>Type: {this.props.value}</span>
+          <select onChange={this.props.onChange} value={this.props.value}>
+            <option value='round'>{this.i18n.ROUND}</option>
+            <option value='square'>{this.i18n.SQUARE}</option>
+            <option value='saw'>{this.i18n.SAW}</option>
+          </select>
+        </label>
+      </div>
+    )
+  }
 }
 
 export default OscillatorSelect

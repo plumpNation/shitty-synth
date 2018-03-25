@@ -5,9 +5,8 @@ const WAVELENGTH_CHANGED = 'wavelengthChanged'
 
 /** @type {Synth.State} */
 const defaultState = {
-  wavelength: 50,
-  oscillatorType: 'square',
-  i18n: {}
+  wavelength: 30,
+  oscillatorType: 'round'
 }
 
 /**
@@ -20,16 +19,12 @@ function reducer (state = defaultState, action) {
     case OSCILLATOR_CHANGED:
       logger.debug(`synthReducer: ${OSCILLATOR_CHANGED} to ${action.payload}`)
 
-      state.oscillatorType = action.payload
-
-      return state
+      return Object.assign({}, state, {oscillatorType: action.payload})
 
     case WAVELENGTH_CHANGED:
       logger.debug(`synthReducer: ${WAVELENGTH_CHANGED} to ${action.payload}`)
 
-      state.wavelength = action.payload
-
-      return state
+      return Object.assign({}, state, {wavelength: action.payload})
 
     default:
       logger.debug('synthReducer: no state change')

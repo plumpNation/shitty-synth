@@ -9,19 +9,25 @@ class WavelengthRange extends React.PureComponent {
   /** @type {Synth.WavelengthRangeProps} */
   static defaultProps = {
     value: 50,
-    i18n: defaultI18n
+    i18n: defaultI18n,
+    onChange: event => undefined
   }
 
-  setWavelength = setWavelength.bind(this)
+  get i18n () {
+    return Object.assign({}, defaultI18n, this.props.i18n)
+  }
 
   render () {
-    logger.debug('WavelengthRange: rendering')
+    logger.debug(this.props, 'WavelengthRange.render')
 
     return (
       <div className='wavelength-range'>
         <label>
-          <span>{this.props.i18n.WAVELENGTH}: {this.props.value}</span>
-          <input type='range' onChange={this.setWavelength} />
+          <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
+          <input
+            type='range'
+            onChange={this.props.onChange}
+            value={this.props.value} />
         </label>
       </div>
     )
@@ -29,12 +35,3 @@ class WavelengthRange extends React.PureComponent {
 }
 
 export default WavelengthRange
-
-function setWavelength (event) {
-  /** @type {Synth.Wavelength} */
-  const data = event.target.value
-
-  logger.debug('WavelengthRange: changed to ' + data)
-
-  this.props.onChange && this.props.onChange(event, data)
-}
