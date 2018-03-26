@@ -4,14 +4,14 @@ import { Provider } from 'react-redux'
 
 import './index.styl'
 
-import store from './ui/state/store'
-import App from './App'
+import store from './state/store'
+import App from './ui/App'
 
 const mountNode = document.querySelector('main')
 
-ReactDOM.render(
+const view = () =>
   <Provider store={store}>
     <App />
-  </Provider>,
-  mountNode
-)
+  </Provider>
+
+ReactDOM.render(view(), mountNode)

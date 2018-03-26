@@ -1,9 +1,9 @@
 import { createStore, compose, combineReducers } from 'redux'
 
-import synthReducer from '../synths/synthReducer'
+import synthsReducer from '../state/synths/reducer'
 
 const rootReducer = combineReducers({
-  synth: synthReducer
+  synths: synthsReducer
 })
 
 const store = createStore(

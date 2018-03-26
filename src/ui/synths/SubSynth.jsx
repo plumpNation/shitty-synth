@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 
 import OscillatorSelect from '../inputs/OscillatorSelect'
 import WavelengthRange from '../inputs/WavelengthRange'
-import {oscillatorChanged, wavelengthChanged} from '../synths/synthActions'
+
+import { synthUpdate } from '../../state/synths/actions'
 
 import logger from '../../lib/logger'
 
@@ -16,6 +17,7 @@ const defaultI18n = {
 class SubSynth extends React.PureComponent {
   /** @type {Synth.Props} */
   static defaultProps = {
+    id: null,
     oscillatorType: 'square',
     wavelength: 50,
     i18n: defaultI18n
@@ -28,8 +30,16 @@ class SubSynth extends React.PureComponent {
     return Object.assign({}, defaultI18n, this.props.i18n)
   }
 
+  onOscillatorChange = event => {
+    this.props.onSynthUpdated({id: this.props.id, oscillatorType: event.target.value})
+  }
+
+  onWavelengthChanged = event => {
+    this.props.onSynthUpdated({id: this.props.id, wavelength: event.target.value})
+  }
+
   render () {
-    logger.debug('SubSynth.render')
+    logger.debug(this.props, 'SubSynth.render')
 
     return (
       <section className='subsynth'>
@@ -38,12 +48,12 @@ class SubSynth extends React.PureComponent {
           <h3>{this.i18n.OSCILLATOR}</h3>
 
           <OscillatorSelect
-            onChange={this.props.onOscillatorChanged}
+            onChange={this.onOscillatorChange}
             value={this.props.oscillatorType}
           />
 
           <WavelengthRange
-            onChange={this.props.onWavelengthChanged}
+            onChange={this.onWavelengthChanged}
             value={this.props.wavelength}
           />
 
@@ -53,28 +63,17 @@ class SubSynth extends React.PureComponent {
   }
 }
 
-// Having this at this level, is it a good thing?
-export default connect(mapStateToProps, mapDispatchToProps)(SubSynth)
-
-function mapStateToProps (state) {
-  logger.debug(state.synth, 'SubSynth.mapStateToProps')
-
-  return {
-    oscillatorType: state.synth.oscillatorType,
-    wavelength: state.synth.wavelength
-  }
-}
+export default connect(null, mapDispatchToProps)(SubSynth)
 
 function mapDispatchToProps (dispatch) {
   logger.debug('SubSynth.mapDispatchToProps')
 
   return {
-    onOscillatorChanged: (event) => {
-      dispatch(oscillatorChanged(event.target.value))
-    },
-
-    onWavelengthChanged: (event) => {
-      dispatch(wavelengthChanged(event.target.value))
+    /**
+     * @param {SynthAction.UpdatePayload} payload
+     */
+    onSynthUpdated: payload => {
+      dispatch(synthUpdate(payload))
     }
   }
 }

@@ -6,7 +6,11 @@ export as namespace Synth;
 
 declare namespace Synth {
   type OscillatorType = 'square' | 'round' | 'saw'
-  type Wavelength = number;
+  type Wavelength = number
+  type Id = number
+
+  type OscillatorChangeEvent = ChangeEvent<HTMLSelectElement>
+  type WavelengthChangeEvent = ChangeEvent<HTMLInputElement>
 
   interface I18n {
       [index: string]: string;
@@ -17,18 +21,19 @@ declare namespace Synth {
   }
 
   interface OscillatorSelectProps extends ComponentProps {
-    value?: OscillatorType,
-    onChange: (event: ChangeEvent<HTMLSelectElement>) => void
+    value?: OscillatorType
+    onChange: (event: OscillatorChangeEvent) => void
   }
 
   interface WavelengthRangeProps extends ComponentProps {
-    value?: Wavelength,
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    value?: Wavelength
+    onChange: (event: WavelengthChangeEvent) => void
   }
 
   interface State {
-    oscillatorType?: OscillatorType,
-    wavelength?: Wavelength,
+    id: Id
+    oscillatorType?: OscillatorType
+    wavelength?: Wavelength
     i18n?: I18n
   }
 
