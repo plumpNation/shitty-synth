@@ -24,14 +24,22 @@ class Oscillator {
     this.oscillator.stop()
   }
 
+  kill () {
+    this.oscillator.stop()
+  }
+
   updateType (type) {
     this.type = type
-    this.oscillator.type = type
+
+    if (this.oscillator) this.oscillator.type = type
   }
 
   updateFrequency (frequency) {
     this.frequency = frequency
-    this.oscillator.frequency.setValueAtTime(this.frequency, this.audioContext.currentTime)
+
+    if (this.oscillator) {
+      this.oscillator.frequency.setValueAtTime(this.frequency, this.audioContext.currentTime)
+    }
   }
 }
 

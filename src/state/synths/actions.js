@@ -22,7 +22,7 @@ export {
  * @returns {Redux.Action}
  */
 function synthCreate (payload) {
-  logger.debug(payload, 'synthsAction.synthCreate')
+  logger.info(payload, 'synthsAction.synthCreate')
 
   return {
     type: SYNTH_CREATE,
@@ -48,7 +48,7 @@ function synthUpdate (payload) {
  * @returns {Redux.Action}
  */
 function synthDelete (payload) {
-  logger.debug(payload, 'synthsAction.synthDelete')
+  logger.info(payload, 'synthsAction.synthDelete')
 
   return {
     type: SYNTH_DELETE,

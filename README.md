@@ -9,3 +9,13 @@ Also using:
 - [Redux](https://redux.js.org/) for state
 - [Parcel](https://parceljs.org) for build
 - [Stylus](http://stylus-lang.com/) for style
+
+## To run
+
+```
+# install all the deps
+yarn
+
+# run the watch build and dev server (parcel)
+yarn dev
+```

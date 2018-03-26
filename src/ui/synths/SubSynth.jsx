@@ -55,6 +55,9 @@ class SubSynth extends React.PureComponent {
   }
 
   onRemove = () => {
+    this.oscillator.kill()
+    this.oscillator = null
+
     this.props.onSynthRemoved({id: this.props.id})
   }
 
