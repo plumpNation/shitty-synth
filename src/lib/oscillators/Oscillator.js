@@ -21,11 +21,11 @@ class Oscillator {
   }
 
   stop () {
-    this.oscillator.stop()
+    this.oscillator && this.oscillator.stop()
   }
 
   kill () {
-    this.oscillator.stop()
+    this.oscillator && this.oscillator.stop()
   }
 
   updateType (type) {
