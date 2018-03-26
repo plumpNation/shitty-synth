@@ -4,13 +4,17 @@ import logger from '../../lib/logger'
 const SYNTH_CREATE = 'synthCreate'
 /** @type {string} */
 const SYNTH_UPDATE = 'synthUpdate'
+/** @type {string} */
+const SYNTH_DELETE = 'synthDelete'
 
 export {
   SYNTH_CREATE,
   SYNTH_UPDATE,
+  SYNTH_DELETE,
 
   synthCreate,
-  synthUpdate
+  synthUpdate,
+  synthDelete
 }
 
 /**
@@ -35,6 +39,19 @@ function synthUpdate (payload) {
 
   return {
     type: SYNTH_UPDATE,
+    payload
+  }
+}
+
+/**
+ * @param {SynthAction.DeletePayload} payload
+ * @returns {Redux.Action}
+ */
+function synthDelete (payload) {
+  logger.debug(payload, 'synthsAction.synthDelete')
+
+  return {
+    type: SYNTH_DELETE,
     payload
   }
 }

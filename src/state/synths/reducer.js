@@ -1,5 +1,5 @@
 import logger from '../../lib/logger'
-import { SYNTH_CREATE, SYNTH_UPDATE } from './actions'
+import { SYNTH_CREATE, SYNTH_UPDATE, SYNTH_DELETE } from './actions'
 
 export default reducer
 
@@ -25,6 +25,11 @@ function reducer (state = [], action) {
 
         return {...synth, ...action.payload}
       })
+
+    case SYNTH_DELETE:
+      logger.debug(action.payload, `synthReducer: ${SYNTH_DELETE}`)
+
+      return state.filter(synth => synth.id !== action.payload.id)
 
     default:
       logger.debug('synthReducer: no state change')
