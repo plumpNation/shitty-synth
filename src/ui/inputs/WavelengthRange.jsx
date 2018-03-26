@@ -26,6 +26,8 @@ class WavelengthRange extends React.PureComponent {
           <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
           <input
             type='range'
+            min='100'
+            max='3000'
             onChange={this.props.onChange}
             value={this.props.value} />
         </label>

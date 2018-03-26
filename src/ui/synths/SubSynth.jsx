@@ -6,13 +6,17 @@ import WavelengthRange from '../inputs/WavelengthRange'
 
 import { synthUpdate, synthDelete } from '../../state/synths/actions'
 
+import Oscillator from '../../lib/oscillators/Oscillator'
+
 import logger from '../../lib/logger'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
   SUB_SYNTH: 'Sub synth',
   OSCILLATOR: 'Oscillator',
-  REMOVE: 'Remove synth'
+  REMOVE: 'Remove synth',
+  PLAY: 'Play',
+  STOP: 'Stop'
 }
 
 class SubSynth extends React.PureComponent {
@@ -20,8 +24,17 @@ class SubSynth extends React.PureComponent {
   static defaultProps = {
     id: null,
     oscillatorType: 'square',
-    wavelength: 50,
+    wavelength: 100,
     i18n: defaultI18n
+  }
+
+  constructor (props) {
+    super(props)
+
+    this.oscillator = new Oscillator({
+      type: this.props.oscillatorType,
+      frequency: this.props.wavelength
+    })
   }
 
   /**
@@ -32,15 +45,25 @@ class SubSynth extends React.PureComponent {
   }
 
   onOscillatorChange = event => {
+    this.oscillator.updateType(event.target.value)
     this.props.onSynthUpdated({id: this.props.id, oscillatorType: event.target.value})
   }
 
   onWavelengthChanged = event => {
+    this.oscillator.updateFrequency(event.target.value)
     this.props.onSynthUpdated({id: this.props.id, wavelength: event.target.value})
   }
 
-  onRemove = event => {
+  onRemove = () => {
     this.props.onSynthRemoved({id: this.props.id})
+  }
+
+  onPlay = () => {
+    this.oscillator.play()
+  }
+
+  onStop = () => {
+    this.oscillator.stop()
   }
 
   render () {
@@ -49,6 +72,9 @@ class SubSynth extends React.PureComponent {
     return (
       <section className='subsynth'>
         <h2>{this.i18n.SUB_SYNTH}</h2>
+
+        <button onClick={this.onRemove}>{this.i18n.REMOVE}</button>
+
         <section className='oscillator-controls'>
           <h3>{this.i18n.OSCILLATOR}</h3>
 
@@ -63,7 +89,9 @@ class SubSynth extends React.PureComponent {
           />
         </section>
 
-        <button onClick={this.onRemove}>{this.i18n.REMOVE}</button>
+        <button onClick={this.onPlay}>{this.i18n.PLAY}</button>
+        <button onClick={this.onStop}>{this.i18n.STOP}</button>
+
       </section>
     )
   }

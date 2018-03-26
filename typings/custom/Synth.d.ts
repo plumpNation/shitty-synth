@@ -5,7 +5,6 @@ export = Synth;
 export as namespace Synth;
 
 declare namespace Synth {
-  type OscillatorType = 'square' | 'round' | 'saw'
   type Wavelength = number
   type Id = number
 
@@ -38,4 +37,9 @@ declare namespace Synth {
   }
 
   interface Props extends State {}
+
+  interface OscillatorProps {
+    type: OscillatorType,
+    frequency: Synth.Wavelength
+  }
 }

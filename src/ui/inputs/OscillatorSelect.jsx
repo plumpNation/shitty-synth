@@ -4,15 +4,16 @@ import logger from '../../lib/logger'
 /** @type {Synth.I18n} */
 const defaultI18n = {
   SQUARE: 'Square',
-  ROUND: 'Round',
-  SAW: 'Saw'
+  SINE: 'Sine',
+  SAWTOOTH: 'Sawtooth',
+  TRIANGLE: 'Triange'
 }
 
 class OscillatorSelect extends React.PureComponent {
   /** @type {Synth.OscillatorSelectProps} */
   static defaultProps = {
     i18n: defaultI18n,
-    value: 'square',
+    value: 'sine',
     onChange: event => undefined
   }
 
@@ -28,9 +29,10 @@ class OscillatorSelect extends React.PureComponent {
         <label>
           <span>Type: {this.props.value}</span>
           <select onChange={this.props.onChange} value={this.props.value}>
-            <option value='round'>{this.i18n.ROUND}</option>
+            <option value='sine'>{this.i18n.SINE}</option>
             <option value='square'>{this.i18n.SQUARE}</option>
-            <option value='saw'>{this.i18n.SAW}</option>
+            <option value='sawtooth'>{this.i18n.SAWTOOTH}</option>
+            <option value='triangle'>{this.i18n.TRIANGLE}</option>
           </select>
         </label>
       </div>

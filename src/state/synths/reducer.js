@@ -45,8 +45,8 @@ function reducer (state = [], action) {
 /** @type {Synth.State} */
 const defaultSynthState = {
   id: null,
-  wavelength: 30,
-  oscillatorType: 'round'
+  wavelength: 100,
+  oscillatorType: 'sine'
 }
 
 /**

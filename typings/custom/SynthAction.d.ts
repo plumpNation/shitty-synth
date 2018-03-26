@@ -5,14 +5,14 @@ export as namespace SynthAction;
 
 declare namespace SynthAction {
   interface CreatePayload {
-    oscillatorType?: Synth.OscillatorType
+    oscillatorType?: OscillatorType
     wavelength?: Synth.Wavelength
     i18n?: Synth.I18n
   }
 
   interface UpdatePayload {
     id: Synth.Id
-    oscillatorType?: Synth.OscillatorType
+    oscillatorType?: OscillatorType
     wavelength?: Synth.Wavelength
   }
 
