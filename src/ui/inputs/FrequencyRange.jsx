@@ -2,11 +2,11 @@ import React from 'react'
 import logger from '../../lib/logger'
 
 const defaultI18n = {
-  WAVELENGTH: 'Wavelength'
+  WAVELENGTH: 'Frequency'
 }
 
-class WavelengthRange extends React.PureComponent {
-  /** @type {Synth.WavelengthRangeProps} */
+class FrequencyRange extends React.PureComponent {
+  /** @type {Synth.FrequencyRangeProps} */
   static defaultProps = {
     value: 50,
     i18n: defaultI18n,
@@ -18,10 +18,10 @@ class WavelengthRange extends React.PureComponent {
   }
 
   render () {
-    logger.debug(this.props, 'WavelengthRange.render')
+    logger.debug(this.props, 'FrequencyRange.render')
 
     return (
-      <div className='wavelength-range'>
+      <div className='frequency-range'>
         <label>
           <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
           <input
@@ -36,4 +36,4 @@ class WavelengthRange extends React.PureComponent {
   }
 }
 
-export default WavelengthRange
+export default FrequencyRange

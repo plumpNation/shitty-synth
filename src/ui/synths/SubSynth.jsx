@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 import OscillatorSelect from '../inputs/OscillatorSelect'
-import WavelengthRange from '../inputs/WavelengthRange'
+import FrequencyRange from '../inputs/FrequencyRange'
 
 import { synthUpdate, synthDelete } from '../../state/synths/actions'
 
@@ -24,7 +24,7 @@ class SubSynth extends React.PureComponent {
   static defaultProps = {
     id: null,
     oscillatorType: 'square',
-    wavelength: 100,
+    frequency: 100,
     i18n: defaultI18n
   }
 
@@ -33,7 +33,7 @@ class SubSynth extends React.PureComponent {
 
     this.oscillator = new Oscillator({
       type: this.props.oscillatorType,
-      frequency: this.props.wavelength
+      frequency: this.props.frequency
     })
   }
 
@@ -49,9 +49,9 @@ class SubSynth extends React.PureComponent {
     this.props.onSynthUpdated({id: this.props.id, oscillatorType: event.target.value})
   }
 
-  onWavelengthChanged = event => {
+  onFrequencyChanged = event => {
     this.oscillator.updateFrequency(event.target.value)
-    this.props.onSynthUpdated({id: this.props.id, wavelength: event.target.value})
+    this.props.onSynthUpdated({id: this.props.id, frequency: event.target.value})
   }
 
   onRemove = () => {
@@ -86,9 +86,9 @@ class SubSynth extends React.PureComponent {
             value={this.props.oscillatorType}
           />
 
-          <WavelengthRange
-            onChange={this.onWavelengthChanged}
-            value={this.props.wavelength}
+          <FrequencyRange
+            onChange={this.onFrequencyChanged}
+            value={this.props.frequency}
           />
         </section>
 

@@ -46,7 +46,7 @@ class Oscillator {
 /**
  * @param {AudioContext} audioContext
  * @param {OscillatorType} type
- * @param {Synth.Wavelength} frequency
+ * @param {Synth.Frequency} frequency
  * @returns {OscillatorNode}
  */
 function createOscillator (audioContext, type, frequency) {
