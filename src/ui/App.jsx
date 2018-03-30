@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { synthCreate } from '../state/synths/actions'
-import SubSynth from './synths/SubSynth'
+import * as oscActions from '../state/oscillators/actions'
+import Oscillator from './oscillators/Oscillator'
 import logger from '../lib/logger'
 
 export class App extends React.PureComponent {
@@ -11,7 +11,7 @@ export class App extends React.PureComponent {
 
   get synths () {
     return !!this.props.synths.length && this.props.synths.map(synth => (
-      <SubSynth key={synth.id} {...synth} />
+      <Oscillator key={synth.id} {...synth} />
     ))
   }
 
@@ -20,7 +20,7 @@ export class App extends React.PureComponent {
 
     return (
       <section>
-        <button onClick={this.props.synthCreate}>Create synth</button>
+        <button onClick={this.props.oscillatorCreate}>Create oscillator</button>
 
         {this.synths}
       </section>
@@ -28,7 +28,7 @@ export class App extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, { synthCreate })(App)
+export default connect(mapStateToProps, { oscillatorCreate: oscActions.create })(App)
 
 function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')

@@ -1,10 +1,10 @@
 import logger from '../../lib/logger'
-import { SYNTH_CREATE, SYNTH_UPDATE, SYNTH_DELETE } from './actions'
+import { CREATE, UPDATE, DESTROY } from './actions'
 
 export default reducer
 
 /**
- * @param {Synths.State} state
+ * @param {Oscillators.State} state
  * @param {Redux.Action} action
  * @returns {Redux.Reducer}
  */
@@ -12,11 +12,11 @@ function reducer (state = [], action) {
   logger.debug(action.payload, 'synthReducer.' + action.type)
 
   switch (action.type) {
-    case SYNTH_CREATE:
+    case CREATE:
       return state.concat(createNewSynth(state))
 
-    case SYNTH_UPDATE:
-      logger.debug(action.payload, `synthReducer: ${SYNTH_UPDATE}`)
+    case UPDATE:
+      logger.debug(action.payload, `synthReducer: ${UPDATE}`)
 
       return state.map(synth => {
         if (synth.id !== action.payload.id) {
@@ -26,8 +26,8 @@ function reducer (state = [], action) {
         return {...synth, ...action.payload}
       })
 
-    case SYNTH_DELETE:
-      logger.debug(action.payload, `synthReducer: ${SYNTH_DELETE}`)
+    case DESTROY:
+      logger.debug(action.payload, `synthReducer: ${DESTROY}`)
 
       return state.filter(synth => synth.id !== action.payload.id)
 
@@ -42,7 +42,7 @@ function reducer (state = [], action) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @type {Synth.State} */
+/** @type {Oscillator.State} */
 const defaultSynthState = {
   id: null,
   frequency: 100,
@@ -50,8 +50,8 @@ const defaultSynthState = {
 }
 
 /**
- * @param {Synths.State} synths
- * @returns {Synth.State}
+ * @param {Oscillators.State} synths
+ * @returns {Oscillator.State}
  */
 function createNewSynth (synths) {
   if (synths.length === 6) {
@@ -60,7 +60,7 @@ function createNewSynth (synths) {
     return
   }
 
-  /** @type {Synth.Id} */
+  /** @type {Oscillator.Id} */
   const lastInsertId = ((synths[synths.length - 1] || {}).id || 0)
 
   return {...defaultSynthState, id: lastInsertId + 1}

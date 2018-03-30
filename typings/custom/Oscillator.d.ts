@@ -1,14 +1,14 @@
 import redux from 'redux'
 import I18n from './I18n'
 
-export = Synth;
-export as namespace Synth;
+export = Oscillator;
+export as namespace Oscillator;
 
-declare namespace Synth {
+declare namespace Oscillator {
   type Frequency = number
   type Id = number
 
-  type OscillatorChangeEvent = ChangeEvent<HTMLSelectElement>
+  type ChangeEvent = ChangeEvent<HTMLSelectElement>
   type FrequencyChangeEvent = ChangeEvent<HTMLInputElement>
 
   interface I18n {
@@ -19,9 +19,9 @@ declare namespace Synth {
     i18n?: I18n
   }
 
-  interface OscillatorSelectProps extends ComponentProps {
-    value?: OscillatorType
-    onChange: (event: OscillatorChangeEvent) => void
+  interface SelectProps extends ComponentProps {
+    value?: Type
+    onChange: (event: ChangeEvent) => void
   }
 
   interface FrequencyRangeProps extends ComponentProps {
@@ -31,15 +31,15 @@ declare namespace Synth {
 
   interface State {
     id: Id
-    oscillatorType?: OscillatorType
+    oscillatorType?: Type
     frequency?: Frequency
     i18n?: I18n
   }
 
   interface Props extends State {}
 
-  interface OscillatorProps {
-    type: OscillatorType,
+  interface Props {
+    type: Type,
     frequency: Synth.Frequency
   }
 }

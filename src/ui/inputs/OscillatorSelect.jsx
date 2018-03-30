@@ -1,7 +1,7 @@
 import React from 'react'
 import logger from '../../lib/logger'
 
-/** @type {Synth.I18n} */
+/** @type {Oscillator.I18n} */
 const defaultI18n = {
   SQUARE: 'Square',
   SINE: 'Sine',
@@ -10,7 +10,7 @@ const defaultI18n = {
 }
 
 class OscillatorSelect extends React.PureComponent {
-  /** @type {Synth.OscillatorSelectProps} */
+  /** @type {Oscillator.OscillatorSelectProps} */
   static defaultProps = {
     i18n: defaultI18n,
     value: 'sine',

@@ -4,13 +4,13 @@ import {connect} from 'react-redux'
 import OscillatorSelect from '../inputs/OscillatorSelect'
 import FrequencyRange from '../inputs/FrequencyRange'
 
-import { synthUpdate, synthDelete } from '../../state/synths/actions'
+import * as oscActions from '../../state/oscillators/actions'
 
-import Oscillator from '../../lib/oscillators/Oscillator'
+import OSC from '../../lib/oscillators/Oscillator'
 
 import logger from '../../lib/logger'
 
-/** @type {Synth.I18n} */
+/** @type {Oscillator.I18n} */
 const defaultI18n = {
   SUB_SYNTH: 'Sub synth',
   OSCILLATOR: 'Oscillator',
@@ -19,11 +19,11 @@ const defaultI18n = {
   STOP: 'Stop'
 }
 
-class SubSynth extends React.PureComponent {
-  /** @type {Synth.Props} */
+class Oscillator extends React.PureComponent {
+  /** @type {Oscillator.Props} */
   static defaultProps = {
     id: null,
-    oscillatorType: 'square',
+    type: 'square',
     frequency: 100,
     i18n: defaultI18n
   }
@@ -31,14 +31,14 @@ class SubSynth extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    this.oscillator = new Oscillator({
+    this.oscillator = new OSC({
       type: this.props.oscillatorType,
       frequency: this.props.frequency
     })
   }
 
   /**
-   * @returns {Synth.I18n}
+   * @returns {Oscillator.I18n}
    */
   get i18n () {
     return Object.assign({}, defaultI18n, this.props.i18n)
@@ -46,40 +46,47 @@ class SubSynth extends React.PureComponent {
 
   onOscillatorChange = event => {
     this.oscillator.updateType(event.target.value)
-    this.props.onSynthUpdated({id: this.props.id, oscillatorType: event.target.value})
+    this.props.onOscillatorUpdated({id: this.props.id, oscillatorType: event.target.value})
   }
 
   onFrequencyChanged = event => {
     this.oscillator.updateFrequency(event.target.value)
-    this.props.onSynthUpdated({id: this.props.id, frequency: event.target.value})
+    this.props.onOscillatorUpdated({id: this.props.id, frequency: event.target.value})
   }
 
   onRemove = () => {
     this.oscillator.kill()
     this.oscillator = null
 
-    this.props.onSynthRemoved({id: this.props.id})
+    this.props.onOscillatorRemoved({id: this.props.id})
   }
 
   onPlay = () => {
+    this.setState({isPlaying: true})
     this.oscillator.play()
   }
 
   onStop = () => {
+    this.setState({isPlaying: false})
     this.oscillator.stop()
   }
 
+  playStopButton () {
+    return this.state && this.state.isPlaying
+      ? <button onClick={this.onStop}>{this.i18n.STOP}</button>
+      : <button onClick={this.onPlay}>{this.i18n.PLAY}</button>
+  }
+
   render () {
-    logger.debug(this.props, 'SubSynth.render')
+    logger.debug(this.props, 'Oscillator.render')
 
     return (
-      <section className='subsynth'>
-        <h2>{this.i18n.SUB_SYNTH}</h2>
+      <section className='oscillator'>
+        <h3>{this.props.oscillatorType} {this.i18n.OSCILLATOR}</h3>
 
         <button onClick={this.onRemove}>{this.i18n.REMOVE}</button>
 
         <section className='oscillator-controls'>
-          <h3>{this.i18n.OSCILLATOR}</h3>
 
           <OscillatorSelect
             onChange={this.onOscillatorChange}
@@ -92,29 +99,28 @@ class SubSynth extends React.PureComponent {
           />
         </section>
 
-        <button onClick={this.onPlay}>{this.i18n.PLAY}</button>
-        <button onClick={this.onStop}>{this.i18n.STOP}</button>
+        {this.playStopButton()}
 
       </section>
     )
   }
 }
 
-export default connect(null, mapDispatchToProps)(SubSynth)
+export default connect(null, mapDispatchToProps)(Oscillator)
 
 function mapDispatchToProps (dispatch) {
-  logger.debug('SubSynth.mapDispatchToProps')
+  logger.debug('Oscillator.mapDispatchToProps')
 
   return {
     /**
-     * @param {SynthAction.UpdatePayload} payload
+     * @param {OscillatorAction.UpdatePayload} payload
      */
-    onSynthUpdated: payload => {
-      dispatch(synthUpdate(payload))
+    onOscillatorUpdated: payload => {
+      dispatch(oscActions.update(payload))
     },
 
-    onSynthRemoved: payload => {
-      dispatch(synthDelete(payload))
+    onOscillatorRemoved: payload => {
+      dispatch(oscActions.destroy(payload))
     }
   }
 }
