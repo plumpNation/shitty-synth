@@ -12,9 +12,8 @@ import logger from '../../lib/logger'
 
 /** @type {Oscillator.I18n} */
 const defaultI18n = {
-  SUB_SYNTH: 'Sub synth',
   OSCILLATOR: 'Oscillator',
-  REMOVE: 'Remove synth',
+  REMOVE: 'Remove',
   PLAY: 'Play',
   STOP: 'Stop'
 }
@@ -46,19 +45,19 @@ class Oscillator extends React.PureComponent {
 
   onOscillatorChange = event => {
     this.oscillator.updateType(event.target.value)
-    this.props.onOscillatorUpdated({id: this.props.id, oscillatorType: event.target.value})
+    this.props.onUpdated({id: this.props.id, oscillatorType: event.target.value})
   }
 
   onFrequencyChanged = event => {
     this.oscillator.updateFrequency(event.target.value)
-    this.props.onOscillatorUpdated({id: this.props.id, frequency: event.target.value})
+    this.props.onUpdated({id: this.props.id, frequency: event.target.value})
   }
 
-  onRemove = () => {
+  onDestroy = () => {
     this.oscillator.kill()
     this.oscillator = null
 
-    this.props.onOscillatorRemoved({id: this.props.id})
+    this.props.onDestroyed({id: this.props.id})
   }
 
   onPlay = () => {
@@ -81,10 +80,8 @@ class Oscillator extends React.PureComponent {
     logger.debug(this.props, 'Oscillator.render')
 
     return (
-      <section className='oscillator'>
-        <h3>{this.props.oscillatorType} {this.i18n.OSCILLATOR}</h3>
-
-        <button onClick={this.onRemove}>{this.i18n.REMOVE}</button>
+      <section className='oscillator {this.props.oscillatorType}'>
+        <h3>{this.i18n.OSCILLATOR}: {this.props.oscillatorType}</h3>
 
         <section className='oscillator-controls'>
 
@@ -99,7 +96,10 @@ class Oscillator extends React.PureComponent {
           />
         </section>
 
-        {this.playStopButton()}
+        <div className='oscillator-controls'>
+          {this.playStopButton()}
+          <button onClick={this.onDestroy}>{this.i18n.REMOVE}</button>
+        </div>
 
       </section>
     )
@@ -115,11 +115,11 @@ function mapDispatchToProps (dispatch) {
     /**
      * @param {OscillatorAction.UpdatePayload} payload
      */
-    onOscillatorUpdated: payload => {
+    onUpdated: payload => {
       dispatch(oscActions.update(payload))
     },
 
-    onOscillatorRemoved: payload => {
+    onDestroyed: payload => {
       dispatch(oscActions.destroy(payload))
     }
   }

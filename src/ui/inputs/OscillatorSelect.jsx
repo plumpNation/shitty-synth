@@ -6,11 +6,12 @@ const defaultI18n = {
   SQUARE: 'Square',
   SINE: 'Sine',
   SAWTOOTH: 'Sawtooth',
-  TRIANGLE: 'Triange'
+  TRIANGLE: 'Triange',
+  TYPE: 'Type'
 }
 
 class OscillatorSelect extends React.PureComponent {
-  /** @type {Oscillator.OscillatorSelectProps} */
+  /** @type {Oscillator.SelectProps} */
   static defaultProps = {
     i18n: defaultI18n,
     value: 'sine',
@@ -27,7 +28,7 @@ class OscillatorSelect extends React.PureComponent {
     return (
       <div className='oscillator-select'>
         <label>
-          <span>Type: {this.props.value}</span>
+          <span className='oscillator-type-label-text'>{this.i18n.TYPE}</span>
           <select onChange={this.props.onChange} value={this.props.value}>
             <option value='sine'>{this.i18n.SINE}</option>
             <option value='square'>{this.i18n.SQUARE}</option>

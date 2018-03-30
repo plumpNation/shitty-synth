@@ -6,12 +6,12 @@ import logger from '../lib/logger'
 
 export class App extends React.PureComponent {
   static defaultProps = {
-    synths: []
+    oscillators: []
   }
 
-  get synths () {
-    return !!this.props.synths.length && this.props.synths.map(synth => (
-      <Oscillator key={synth.id} {...synth} />
+  get oscillators () {
+    return !!this.props.oscillators.length && this.props.oscillators.map(oscillator => (
+      <Oscillator key={oscillator.id} {...oscillator} />
     ))
   }
 
@@ -22,7 +22,7 @@ export class App extends React.PureComponent {
       <section>
         <button onClick={this.props.oscillatorCreate}>Create oscillator</button>
 
-        {this.synths}
+        {this.oscillators}
       </section>
     )
   }
@@ -34,6 +34,6 @@ function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')
 
   return {
-    synths: state.synths
+    oscillators: state.oscillators
   }
 }
