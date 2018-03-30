@@ -1,7 +1,7 @@
 class Oscillator {
   /**
    *
-   * @param {Oscillator.OscillatorProps} props
+   * @param {Oscillator.Props} props
    */
   constructor (props) {
     const {type = 'square', frequency = 100} = props
@@ -12,6 +12,8 @@ class Oscillator {
 
     this.type = type
     this.frequency = frequency
+
+    /** @type {AudioContext} */
     this.audioContext = new AudioContext()
   }
 
@@ -65,7 +67,11 @@ function createOscillator (audioContext, type, frequency) {
  * @returns {boolean}
  */
 function available () {
-  return !!window.AudioContext
+  try {
+    return !!AudioContext
+  } catch (err) {
+    return false
+  }
 }
 
 export default Oscillator

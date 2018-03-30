@@ -27,6 +27,7 @@
     "stylus": "^0.54.5"
   },
   "standard": {
+    "env": "browser",
     "parser": "babel-eslint"
   },
   "dependencies": {
