@@ -54,8 +54,14 @@ const defaultSynthState = {
  * @returns {Synth.State}
  */
 function createNewSynth (synths) {
-  /** @type {Synth.Id} */
-  const lastInsertId = synths[synths.length - 1] || 1
+  if (synths.length === 6) {
+    logger.warn('jeff says "no more synths for you"')
 
-  return {...defaultSynthState, id: lastInsertId}
+    return
+  }
+
+  /** @type {Synth.Id} */
+  const lastInsertId = ((synths[synths.length - 1] || {}).id || 0)
+
+  return {...defaultSynthState, id: lastInsertId + 1}
 }

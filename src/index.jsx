@@ -1,17 +1,23 @@
+import './index.styl'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/es/integration/react'
 
-import './index.styl'
+import configureStore from './state/configureStore'
 
-import store from './state/store'
 import App from './ui/App'
+
+const { persistor, store } = configureStore()
 
 const mountNode = document.querySelector('main')
 
 const view = () =>
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 
 ReactDOM.render(view(), mountNode)

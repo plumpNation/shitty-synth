@@ -28,5 +28,8 @@
   },
   "standard": {
     "parser": "babel-eslint"
+  },
+  "dependencies": {
+    "redux-persist": "^5.9.1"
   }
 }

@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
-import SubSynth from './synths/SubSynth'
 import { synthCreate } from '../state/synths/actions'
-
+import SubSynth from './synths/SubSynth'
 import logger from '../lib/logger'
 
 export class App extends React.PureComponent {
