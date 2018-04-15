@@ -19,6 +19,10 @@ const enhancer = compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 
+export const defaultState = {
+  oscillators: []
+}
+
 export default () => {
   let store = createStore(persistedReducer, undefined, enhancer)
 

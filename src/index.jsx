@@ -6,10 +6,13 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
 
 import configureStore from './state/configureStore'
+import { createAudioPlayer } from './lib/audio/player'
 
 import App from './ui/App'
 
 const { persistor, store } = configureStore()
+
+// UI
 
 const mountNode = document.querySelector('main')
 
@@ -19,5 +22,7 @@ const view = () =>
       <App />
     </PersistGate>
   </Provider>
+
+createAudioPlayer(store)
 
 ReactDOM.render(view(), mountNode)

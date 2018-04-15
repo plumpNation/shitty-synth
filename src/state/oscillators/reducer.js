@@ -1,10 +1,10 @@
 import logger from '../../lib/logger'
-import { CREATE, UPDATE, DESTROY } from './actions'
+import OscillatorAction from './actions'
 
 export default reducer
 
 /**
- * @param {Oscillators.State} state
+ * @param {Synth.Oscillators.State} state
  * @param {Redux.Action} action
  * @returns {Redux.Reducer}
  */
@@ -12,11 +12,11 @@ function reducer (state = [], action) {
   logger.debug(action.payload, 'synthReducer.' + action.type)
 
   switch (action.type) {
-    case CREATE:
+    case OscillatorAction.CREATE:
       return state.concat(createNewSynth(state))
 
-    case UPDATE:
-      logger.debug(action.payload, `synthReducer: ${UPDATE}`)
+    case OscillatorAction.UPDATE:
+      logger.debug(action.payload, `synthReducer: ${OscillatorAction.UPDATE}`)
 
       return state.map(synth => {
         if (synth.id !== action.payload.id) {
@@ -26,8 +26,8 @@ function reducer (state = [], action) {
         return {...synth, ...action.payload}
       })
 
-    case DESTROY:
-      logger.debug(action.payload, `synthReducer: ${DESTROY}`)
+    case OscillatorAction.DESTROY:
+      logger.debug(action.payload, `synthReducer: ${OscillatorAction.DESTROY}`)
 
       return state.filter(synth => synth.id !== action.payload.id)
 
@@ -42,7 +42,7 @@ function reducer (state = [], action) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @type {Oscillator.State} */
+/** @type {Synth.Oscillator.State} */
 const defaultSynthState = {
   id: null,
   frequency: 100,
@@ -50,8 +50,8 @@ const defaultSynthState = {
 }
 
 /**
- * @param {Oscillators.State} synths
- * @returns {Oscillator.State}
+ * @param {Synth.Oscillators.State} synths
+ * @returns {Synth.Oscillator.State}
  */
 function createNewSynth (synths) {
   if (synths.length === 6) {
@@ -60,7 +60,7 @@ function createNewSynth (synths) {
     return
   }
 
-  /** @type {Oscillator.Id} */
+  /** @type {Synth.Oscillator.Id} */
   const lastInsertId = ((synths[synths.length - 1] || {}).id || 0)
 
   return {...defaultSynthState, id: lastInsertId + 1}

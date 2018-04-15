@@ -4,13 +4,13 @@ import {connect} from 'react-redux'
 import OscillatorSelect from '../inputs/OscillatorSelect'
 import FrequencyRange from '../inputs/FrequencyRange'
 
-import * as oscActions from '../../state/oscillators/actions'
+import oscActions from '../../state/oscillators/actions'
 
-import OSC from '../../lib/oscillators/Oscillator'
+import Oscillator from '../../lib/oscillators/Oscillator'
 
 import logger from '../../lib/logger'
 
-/** @type {Oscillator.I18n} */
+/** @type {Synth.Oscillator.I18n} */
 const defaultI18n = {
   OSCILLATOR: 'Oscillator',
   REMOVE: 'Remove',
@@ -18,8 +18,8 @@ const defaultI18n = {
   STOP: 'Stop'
 }
 
-class Oscillator extends React.PureComponent {
-  /** @type {Oscillator.Props} */
+class OscillatorView extends React.PureComponent {
+  /** @type {Synth.Oscillator.Props} */
   static defaultProps = {
     id: null,
     type: 'square',
@@ -30,14 +30,14 @@ class Oscillator extends React.PureComponent {
   constructor (props) {
     super(props)
 
-    this.oscillator = new OSC({
+    this.oscillator = new Oscillator({
       type: this.props.oscillatorType,
       frequency: this.props.frequency
     })
   }
 
   /**
-   * @returns {Oscillator.I18n}
+   * @returns {Synth.Oscillator.I18n}
    */
   get i18n () {
     return Object.assign({}, defaultI18n, this.props.i18n)
@@ -106,14 +106,14 @@ class Oscillator extends React.PureComponent {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Oscillator)
+export default connect(null, mapDispatchToProps)(OscillatorView)
 
 function mapDispatchToProps (dispatch) {
   logger.debug('Oscillator.mapDispatchToProps')
 
   return {
     /**
-     * @param {OscillatorAction.UpdatePayload} payload
+     * @param {Synth.OscillatorAction.UpdatePayload} payload
      */
     onUpdated: payload => {
       dispatch(oscActions.update(payload))

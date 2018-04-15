@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as oscActions from '../state/oscillators/actions'
-import Oscillator from './oscillators/Oscillator'
+import oscillatorActions from '../state/oscillators/actions'
+import OscillatorView from './oscillators/OscillatorView'
 import logger from '../lib/logger'
 
 export class App extends React.PureComponent {
@@ -10,8 +10,12 @@ export class App extends React.PureComponent {
   }
 
   get oscillators () {
-    return !!this.props.oscillators.length && this.props.oscillators.map(oscillator => (
-      <Oscillator key={oscillator.id} {...oscillator} />
+    if (!this.props.oscillators.length) {
+      return
+    }
+
+    return this.props.oscillators.map(oscillator => (
+      <OscillatorView key={oscillator.id} {...oscillator} />
     ))
   }
 
@@ -28,7 +32,9 @@ export class App extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, { oscillatorCreate: oscActions.create })(App)
+export default connect(mapStateToProps, {
+  oscillatorCreate: oscillatorActions.create
+})(App)
 
 function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')

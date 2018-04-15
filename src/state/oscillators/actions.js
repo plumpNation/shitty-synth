@@ -7,7 +7,7 @@ const UPDATE = 'oscillatorUpdate'
 /** @type {string} */
 const DESTROY = 'oscillatorDestroy'
 
-export {
+export default {
   CREATE,
   UPDATE,
   DESTROY,
@@ -18,7 +18,12 @@ export {
 }
 
 /**
- * @param {OscillatorAction.CreatePayload} payload
+ * @param {Synth.OscillatorActions.CreatePayload} payload
+ * @returns {Redux.Action}
+ */
+
+/**
+ * @param {Synth.OscillatorActions.CreatePayload} payload
  * @returns {Redux.Action}
  */
 function create (payload) {
@@ -31,7 +36,7 @@ function create (payload) {
 }
 
 /**
- * @param {OscillatorAction.CreatePayload} payload
+ * @param {Synth.OscillatorActions.CreatePayload} payload
  * @returns {Redux.Action}
  */
 function update (payload) {
@@ -44,7 +49,7 @@ function update (payload) {
 }
 
 /**
- * @param {OscillatorAction.DestroyPayload} payload
+ * @param {Synth.OscillatorActions.DestroyPayload} payload
  * @returns {Redux.Action}
  */
 function destroy (payload) {

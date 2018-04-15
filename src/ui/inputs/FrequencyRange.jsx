@@ -6,7 +6,7 @@ const defaultI18n = {
 }
 
 class FrequencyRange extends React.PureComponent {
-  /** @type {Oscillator.FrequencyRangeProps} */
+  /** @type {Synth.Oscillator.FrequencyRangeProps} */
   static defaultProps = {
     value: 50,
     i18n: defaultI18n,
