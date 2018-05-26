@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import oscillatorActions from '../state/oscillators/actions'
-import OscillatorView from './oscillators/OscillatorView'
+import OscillatorModule from './oscillators/OscillatorModule'
 import logger from '../lib/logger'
 
 export class App extends React.PureComponent {
@@ -15,7 +15,7 @@ export class App extends React.PureComponent {
     }
 
     return this.props.oscillators.map(oscillator => (
-      <OscillatorView key={oscillator.id} {...oscillator} />
+      <OscillatorModule key={oscillator.id} {...oscillator} />
     ))
   }
 

@@ -18,7 +18,7 @@ const defaultI18n = {
   STOP: 'Stop'
 }
 
-class OscillatorView extends React.PureComponent {
+class OscillatorModule extends React.PureComponent {
   /** @type {Synth.Oscillator.Props} */
   static defaultProps = {
     id: null,
@@ -40,7 +40,7 @@ class OscillatorView extends React.PureComponent {
    * @returns {Synth.Oscillator.I18n}
    */
   get i18n () {
-    return Object.assign({}, defaultI18n, this.props.i18n)
+    return {...defaultI18n, ...this.props.i18n}
   }
 
   onOscillatorChange = event => {
@@ -106,14 +106,14 @@ class OscillatorView extends React.PureComponent {
   }
 }
 
-export default connect(null, mapDispatchToProps)(OscillatorView)
+export default connect(null, mapDispatchToProps)(OscillatorModule)
 
 function mapDispatchToProps (dispatch) {
   logger.debug('Oscillator.mapDispatchToProps')
 
   return {
     /**
-     * @param {Synth.OscillatorAction.UpdatePayload} payload
+     * @param {Synth.OscillatorActions.UpdatePayload} payload
      */
     onUpdated: payload => {
       dispatch(oscActions.update(payload))

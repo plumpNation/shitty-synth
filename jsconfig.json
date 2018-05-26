@@ -4,8 +4,8 @@
         "module": "es6",
         "baseUrl": ".",
         "checkJs": true,
-        "target": "ESNext",
-        "jsx": "preserve"
+        "jsx": "preserve",
+        "target": "esnext"
     },
 
     "exclude": [
