@@ -32,6 +32,12 @@ declare namespace Synth {
     }
   }
 
+  declare namespace Transport {
+    interface State {
+      isPlaying: boolean
+    }
+  }
+
   declare namespace OscillatorModule {
     type Id = Oscillator.Id
     type Type = Oscillator.Type

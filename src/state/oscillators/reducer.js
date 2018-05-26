@@ -10,7 +10,7 @@ export default reducer
  * @returns {Redux.Reducer}
  */
 function reducer (state = [], action) {
-  logger.debug(action.payload, 'synthReducer.' + action.type)
+  logger.debug(action.payload, 'oscillatorReducer.' + action.type)
 
   switch (action.type) {
     case TransportActions.PLAY:
@@ -31,7 +31,7 @@ function reducer (state = [], action) {
       return state.concat(addOscillator(state, action.payload))
 
     case OscillatorActions.UPDATE:
-      logger.debug(action.payload, `synthReducer: ${OscillatorActions.UPDATE}`)
+      logger.debug(action.payload, `oscillatorReducer: ${OscillatorActions.UPDATE}`)
 
       return state.map(synth => {
         if (synth.id !== action.payload.id) {
@@ -42,12 +42,12 @@ function reducer (state = [], action) {
       })
 
     case OscillatorActions.REMOVE:
-      logger.debug(action.payload, `synthReducer: ${OscillatorActions.REMOVE}`)
+      logger.debug(action.payload, `oscillatorReducer: ${OscillatorActions.REMOVE}`)
 
       return state.filter(synth => synth.id !== action.payload.id)
 
     default:
-      logger.debug('synthReducer: no state change')
+      logger.debug('oscillatorReducer: no state change')
 
       return state
   }

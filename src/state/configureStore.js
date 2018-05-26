@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import oscillatorsReducer from '../state/oscillators/reducer'
+import transportReducer from '../state/transport/reducer'
 
 const persistConfig = {
   key: 'synthPersist',
@@ -10,7 +11,8 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-  oscillators: oscillatorsReducer
+  oscillators: oscillatorsReducer,
+  transport: transportReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
