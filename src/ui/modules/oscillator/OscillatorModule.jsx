@@ -6,15 +6,13 @@ import FrequencyRange from './FrequencyRange'
 
 import oscillatorActions from '../../../state/oscillators/actions'
 
-import Oscillator from '../../../lib/oscillators/Oscillator'
-
 import logger from '../../../lib/logger'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
   OSCILLATOR: 'Oscillator',
   REMOVE: 'Remove',
-  PLAYING: 'Playing'
+  ACTIVE: 'Active'
 }
 
 class OscillatorModule extends React.PureComponent {
@@ -24,25 +22,7 @@ class OscillatorModule extends React.PureComponent {
     type: 'square',
     frequency: 100,
     i18n: defaultI18n,
-    isPlaying: false
-  }
-
-  constructor (props) {
-    super(props)
-
-    // @todo - this should not be in here. Move it up to the controller.
-    this.oscillator = new Oscillator({
-      type: this.props.type,
-      frequency: this.props.frequency
-    })
-  }
-
-  componentDidUpdate (prevProps) {
-    if (this.props.isPlaying) {
-      !prevProps.isPlaying && this.oscillator.play()
-    } else {
-      this.oscillator.stop()
-    }
+    isActive: false
   }
 
   /**
@@ -53,19 +33,14 @@ class OscillatorModule extends React.PureComponent {
   }
 
   updateType = event => {
-    this.oscillator.updateType(event.target.value)
     this.props.onUpdated({id: this.props.id, type: event.target.value})
   }
 
   updateFrequency = event => {
-    this.oscillator.updateFrequency(event.target.value)
     this.props.onUpdated({id: this.props.id, frequency: event.target.value})
   }
 
   remove = () => {
-    this.oscillator.kill()
-    this.oscillator = null
-
     this.props.onRemoved({id: this.props.id})
   }
 
@@ -89,7 +64,7 @@ class OscillatorModule extends React.PureComponent {
           onChange={this.updateFrequency}
           value={this.props.frequency}
         />
-        <p>{this.props.isPlaying && this.i18n.PLAYING}</p>
+        <p>{this.props.isActive && this.i18n.ACTIVE}</p>
       </section>
     )
   }

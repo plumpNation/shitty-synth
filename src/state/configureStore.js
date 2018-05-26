@@ -12,7 +12,9 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   oscillators: oscillatorsReducer,
-  transport: transportReducer
+  transport: transportReducer,
+  action: (_, action) => action.type,
+  payload: (_, action) => action.payload || {}
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
