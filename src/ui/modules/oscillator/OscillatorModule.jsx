@@ -14,8 +14,7 @@ import logger from '../../../lib/logger'
 const defaultI18n = {
   OSCILLATOR: 'Oscillator',
   REMOVE: 'Remove',
-  PLAY: 'Play',
-  STOP: 'Stop'
+  PLAYING: 'Playing'
 }
 
 class OscillatorModule extends React.PureComponent {
@@ -24,16 +23,26 @@ class OscillatorModule extends React.PureComponent {
     id: null,
     type: 'square',
     frequency: 100,
-    i18n: defaultI18n
+    i18n: defaultI18n,
+    isPlaying: false
   }
 
   constructor (props) {
     super(props)
 
+    // @todo - this should not be in here. Move it up to the controller.
     this.oscillator = new Oscillator({
       type: this.props.type,
       frequency: this.props.frequency
     })
+  }
+
+  componentDidUpdate (prevProps) {
+    if (this.props.isPlaying) {
+      !prevProps.isPlaying && this.oscillator.play()
+    } else {
+      this.oscillator.stop()
+    }
   }
 
   /**
@@ -60,22 +69,9 @@ class OscillatorModule extends React.PureComponent {
     this.props.onRemoved({id: this.props.id})
   }
 
-  play = () => {
-    this.setState({isPlaying: true})
-    this.oscillator.play()
-  }
-
-  stop = () => {
-    this.setState({isPlaying: false})
-    this.oscillator.stop()
-  }
-
   transport () {
     return (
       <div className='oscillator-transport'>
-        {this.state && this.state.isPlaying
-          ? <button onClick={this.stop}>{this.i18n.STOP}</button>
-          : <button onClick={this.play}>{this.i18n.PLAY}</button>}
         <button onClick={this.remove}>{this.i18n.REMOVE}</button>
       </div>
     )
@@ -93,6 +89,7 @@ class OscillatorModule extends React.PureComponent {
           onChange={this.updateFrequency}
           value={this.props.frequency}
         />
+        <p>{this.props.isPlaying && this.i18n.PLAYING}</p>
       </section>
     )
   }
@@ -110,7 +107,7 @@ class OscillatorModule extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OscillatorModule)
+export default connect(mapStateToProps, mapDispatchToProps())(OscillatorModule)
 
 function mapStateToProps (state) {
   logger.debug(state, 'OscillatorModule.mapStateToProps')
@@ -120,19 +117,11 @@ function mapStateToProps (state) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps () {
   logger.debug('OscillatorModule.mapDispatchToProps')
 
   return {
-    /**
-     * @param {Synth.OscillatorModule.State} payload
-     */
-    onUpdated: payload => {
-      dispatch(oscillatorActions.update(payload))
-    },
-
-    onRemoved: payload => {
-      dispatch(oscillatorActions.remove(payload))
-    }
+    onUpdated: oscillatorActions.update,
+    onRemoved: oscillatorActions.remove
   }
 }

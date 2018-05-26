@@ -59,16 +59,22 @@ export class App extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, {
-  oscillatorAdd: oscillatorActions.add,
-  transportPlay: transportActions.play,
-  transportStop: transportActions.stop
-})(App)
+export default connect(mapStateToProps, mapDispatchToProps())(App)
 
 function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')
 
   return {
     oscillators: state.oscillators
+  }
+}
+
+function mapDispatchToProps () {
+  logger.debug('App.mapDispatchToProps')
+
+  return {
+    oscillatorAdd: oscillatorActions.add,
+    transportPlay: transportActions.play,
+    transportStop: transportActions.stop
   }
 }

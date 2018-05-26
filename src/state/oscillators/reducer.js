@@ -1,5 +1,6 @@
 import logger from '../../lib/logger'
 import OscillatorActions from './actions'
+import TransportActions from '../transport/actions'
 
 export default reducer
 
@@ -12,6 +13,20 @@ function reducer (state = [], action) {
   logger.debug(action.payload, 'synthReducer.' + action.type)
 
   switch (action.type) {
+    case TransportActions.PLAY:
+      return state.map(oscillator => {
+        oscillator.isPlaying = true
+
+        return oscillator
+      })
+
+    case TransportActions.STOP:
+      return state.map(oscillator => {
+        oscillator.isPlaying = false
+
+        return oscillator
+      })
+
     case OscillatorActions.ADD:
       return state.concat(addOscillator(state, action.payload))
 
@@ -45,7 +60,8 @@ function reducer (state = [], action) {
 /** @type {Synth.OscillatorModule.State} */
 const defaultOscillator = {
   frequency: 100,
-  type: 'sine'
+  type: 'sine',
+  isPlaying: false
 }
 
 /**
@@ -79,9 +95,9 @@ function removeRedux (payload) {
     return null
   }
 
-  const {frequency, type} = payload
+  const {frequency, type, isPlaying} = payload
 
-  return {frequency, type}
+  return {frequency, type, isPlaying}
 }
 
 /**

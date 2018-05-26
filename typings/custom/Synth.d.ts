@@ -58,6 +58,7 @@ declare namespace Synth {
       id?: Id
       type: Type
       frequency: Frequency
+      isPlaying: boolean
       i18n?: I18n
     }
   }
