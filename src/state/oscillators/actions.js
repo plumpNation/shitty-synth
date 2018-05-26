@@ -1,42 +1,37 @@
 import logger from '../../lib/logger'
 
 /** @type {string} */
-const CREATE = 'oscillatorCreate'
+const ADD = 'oscillatorAdd'
 /** @type {string} */
 const UPDATE = 'oscillatorUpdate'
 /** @type {string} */
-const DESTROY = 'oscillatorDestroy'
+const REMOVE = 'oscillatorRemove'
 
 export default {
-  CREATE,
+  ADD,
   UPDATE,
-  DESTROY,
+  REMOVE,
 
-  create,
+  add,
   update,
-  destroy
+  remove
 }
 
 /**
- * @param {Synth.OscillatorActions.CreatePayload} payload
+ * @param {Synth.Oscillator.State} payload
  * @returns {Redux.Action}
  */
-
-/**
- * @param {Synth.OscillatorActions.CreatePayload} payload
- * @returns {Redux.Action}
- */
-function create (payload) {
-  logger.info(payload, 'oscillatorsAction.create')
+function add (payload) {
+  logger.info(payload, 'oscillatorsAction.add')
 
   return {
-    type: CREATE,
+    type: ADD,
     payload
   }
 }
 
 /**
- * @param {Synth.OscillatorActions.CreatePayload} payload
+ * @param {Synth.Oscillator.State} payload
  * @returns {Redux.Action}
  */
 function update (payload) {
@@ -49,14 +44,14 @@ function update (payload) {
 }
 
 /**
- * @param {Synth.OscillatorActions.DestroyPayload} payload
+ * @param {Synth.Oscillator.State} payload
  * @returns {Redux.Action}
  */
-function destroy (payload) {
+function remove (payload) {
   logger.info(payload, 'oscillatorsAction.delete')
 
   return {
-    type: DESTROY,
+    type: REMOVE,
     payload
   }
 }

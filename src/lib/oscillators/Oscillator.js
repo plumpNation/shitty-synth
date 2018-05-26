@@ -1,7 +1,7 @@
 class Oscillator {
   /**
    *
-   * @param {Oscillator.Props} props
+   * @param {Synth.Oscillator.Props} props
    */
   constructor (props) {
     const {type = 'square', frequency = 100} = props
@@ -47,9 +47,9 @@ class Oscillator {
 
 /**
  * @param {AudioContext} audioContext
- * @param {Synth.OscillatorType} type
+ * @param {Synth.Oscillator.Type} type
  * @param {Synth.Oscillator.Frequency} frequency
- * @returns {Synth.OscillatorNode}
+ * @returns {OscillatorNode}
  */
 function createOscillator (audioContext, type, frequency) {
   const oscillator = audioContext.createOscillator()

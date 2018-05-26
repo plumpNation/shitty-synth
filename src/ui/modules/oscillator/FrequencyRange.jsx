@@ -1,12 +1,12 @@
 import React from 'react'
-import logger from '../../lib/logger'
+import logger from '../../../lib/logger'
 
 const defaultI18n = {
   WAVELENGTH: 'Frequency'
 }
 
 class FrequencyRange extends React.PureComponent {
-  /** @type {Synth.Oscillator.FrequencyRangeProps} */
+  /** @type {Synth.OscillatorModule.FrequencyRangeProps} */
   static defaultProps = {
     value: 50,
     i18n: defaultI18n,
