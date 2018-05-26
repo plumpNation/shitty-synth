@@ -28,7 +28,7 @@ function play () {
  * @returns {Redux.Action}
  */
 function stop () {
-  logger.debug('transportAction.stop')
+  logger.info('transportAction.stop')
 
   return {
     type: STOP

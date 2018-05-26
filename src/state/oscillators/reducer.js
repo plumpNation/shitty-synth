@@ -13,7 +13,7 @@ function reducer (state = [], action) {
 
   switch (action.type) {
     case OscillatorActions.ADD:
-      return state.concat(addOscillator(state))
+      return state.concat(addOscillator(state, action.payload))
 
     case OscillatorActions.UPDATE:
       logger.debug(action.payload, `synthReducer: ${OscillatorActions.UPDATE}`)
@@ -42,17 +42,16 @@ function reducer (state = [], action) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @type {Synth.Oscillator.State} */
+/** @type {Synth.OscillatorModule.State} */
 const defaultOscillator = {
-  id: null,
   frequency: 100,
   type: 'sine'
 }
 
 /**
  * @param {Synth.Oscillators.State} state
- * @param {Synth.Oscillators.AddPayload} state
- * @returns {Synth.Oscillator.State}
+ * @param {Synth.OscillatorModule.State | undefined} payload
+ * @returns {Synth.OscillatorModule.State}
  */
 function addOscillator (state, payload) {
   if (state.length === 6) {
@@ -63,7 +62,35 @@ function addOscillator (state, payload) {
 
   /** @type {Synth.Oscillator.Id} */
   const lastInsertId = ((state[state.length - 1] || {}).id || 0)
-  const newOscillator = payload || defaultOscillator
+  const newOscillator = removeRedux(payload) || defaultOscillator
 
   return {...newOscillator, id: lastInsertId + 1}
+}
+
+/**
+ * If we want to be able to persist redux state in the localStorage, we must
+ * remove the circular dependencies that Redux adds to the payload.
+ *
+ * @param {Synth.OscillatorModule.State} payload
+ * @returns {Synth.OscillatorModule.State | null}
+ */
+function removeRedux (payload) {
+  if (!isValidOscillator(payload)) {
+    return null
+  }
+
+  const {frequency, type} = payload
+
+  return {frequency, type}
+}
+
+/**
+ * Checks that the data shares all keys in the defaultOscillator
+ *
+ * @see defaultOscillator
+ * @param {Synth.OscillatorModule.State} data
+ * @returns {boolean}
+ */
+function isValidOscillator (data) {
+  return !(Object.keys(defaultOscillator).some(key => !data[key]))
 }
