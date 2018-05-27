@@ -25,6 +25,4 @@ const view = () =>
     </PersistGate>
   </Provider>
 
-createAudioPlayer(store)
-
 ReactDOM.render(view(), mountNode)
