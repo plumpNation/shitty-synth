@@ -23,14 +23,14 @@ class FrequencyRange extends React.PureComponent {
     return (
       <div className='frequency-range'>
         <label>
-          <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
           <input
             type='range'
-            min='100'
+            min='0'
             max='3000'
             onChange={this.props.onChange}
             value={this.props.value} />
         </label>
+        <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
       </div>
     )
   }
