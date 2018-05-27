@@ -9,15 +9,11 @@ export default reducer
  * @returns {Redux.Reducer}
  */
 function reducer (state = [], action) {
-  logger.debug(action.payload, 'oscillatorReducer.' + action.type)
-
   switch (action.type) {
     case OscillatorActions.ADD:
       return state.concat(addOscillator(state, action.payload))
 
     case OscillatorActions.UPDATE:
-      logger.debug(action.payload, `oscillatorReducer: ${OscillatorActions.UPDATE}`)
-
       return state.map(synth => {
         if (synth.id !== action.payload.id) {
           return synth
@@ -27,13 +23,9 @@ function reducer (state = [], action) {
       })
 
     case OscillatorActions.REMOVE:
-      logger.debug(action.payload, `oscillatorReducer: ${OscillatorActions.REMOVE}`)
-
       return state.filter(synth => synth.id !== action.payload.id)
 
     default:
-      logger.debug('oscillatorReducer: no state change')
-
       return state
   }
 }
@@ -56,14 +48,14 @@ const defaultOscillator = {
  */
 function addOscillator (state, payload) {
   if (state.length === 6) {
-    logger.warn('jeff says "no more oscillators for you"')
+    logger.warn('Jeff says "no more oscillators for you"')
 
     return
   }
 
   /** @type {Synth.Oscillator.Id} */
   const lastInsertId = ((state[state.length - 1] || {}).id || 0)
-  const newOscillator = removeRedux(payload) || defaultOscillator
+  const newOscillator = cleanPayload(payload) || defaultOscillator
 
   return {...newOscillator, id: lastInsertId + 1}
 }
@@ -75,7 +67,7 @@ function addOscillator (state, payload) {
  * @param {Synth.OscillatorModule.State} payload
  * @returns {Synth.OscillatorModule.State | null}
  */
-function removeRedux (payload) {
+function cleanPayload (payload) {
   if (!isValidOscillator(payload)) {
     return null
   }

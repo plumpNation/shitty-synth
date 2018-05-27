@@ -1,5 +1,3 @@
-import logger from '../../lib/logger'
-
 /** @type {string} */
 const PLAY = 'transportPlay'
 /** @type {string} */
@@ -17,8 +15,6 @@ export default {
  * @returns {Redux.Action}
  */
 function play () {
-  logger.info('transportAction.play')
-
   return {
     type: PLAY
   }
@@ -28,8 +24,6 @@ function play () {
  * @returns {Redux.Action}
  */
 function stop () {
-  logger.info('transportAction.stop')
-
   return {
     type: STOP
   }

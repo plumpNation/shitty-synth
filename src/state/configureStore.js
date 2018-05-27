@@ -1,9 +1,11 @@
-import { compose, createStore, combineReducers } from 'redux'
+import { compose, createStore, combineReducers, applyMiddleware } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import oscillatorsReducer from '../state/oscillators/reducer'
 import transportReducer from '../state/transport/reducer'
+
+import LoggerMiddleware from './middleware/logger'
 
 const persistConfig = {
   key: 'synthPersist',
@@ -19,7 +21,8 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const enhancer = compose(
+const middleware = compose(
+  applyMiddleware(LoggerMiddleware),
   window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 
@@ -28,7 +31,8 @@ export const defaultState = {
 }
 
 export default () => {
-  let store = createStore(persistedReducer, undefined, enhancer)
+  // reducers, initialState, middleware
+  let store = createStore(persistedReducer, undefined, middleware)
 
   let persistor = persistStore(store)
 

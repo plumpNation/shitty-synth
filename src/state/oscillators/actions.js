@@ -1,5 +1,3 @@
-import logger from '../../lib/logger'
-
 /** @type {string} */
 const ADD = 'oscillatorAdd'
 /** @type {string} */
@@ -18,12 +16,10 @@ export default {
 }
 
 /**
- * @param {Synth.Oscillator.State} payload
+ * @param {Synth.OscillatorModule.State} payload
  * @returns {Redux.Action}
  */
 function add (payload) {
-  logger.info(payload, 'oscillatorsAction.add')
-
   return {
     type: ADD,
     payload
@@ -31,12 +27,10 @@ function add (payload) {
 }
 
 /**
- * @param {Synth.Oscillator.State} payload
+ * @param {Synth.OscillatorModule.State} payload
  * @returns {Redux.Action}
  */
 function update (payload) {
-  logger.debug(payload, 'oscillatorsAction.update')
-
   return {
     type: UPDATE,
     payload
@@ -44,12 +38,10 @@ function update (payload) {
 }
 
 /**
- * @param {Synth.Oscillator.State} payload
+ * @param {Synth.OscillatorModule.State} payload
  * @returns {Redux.Action}
  */
 function remove (payload) {
-  logger.info(payload, 'oscillatorsAction.delete')
-
   return {
     type: REMOVE,
     payload
