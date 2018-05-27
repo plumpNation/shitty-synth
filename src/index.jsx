@@ -51,8 +51,8 @@ store.subscribe(() => {
   if (action === OscillatorActions.UPDATE) {
     const {id} = payload
 
-    oscillatorsT[id].updateType(payload.type)
-    oscillatorsT[id].updateFrequency(payload.frequency)
+    payload.type && oscillatorsT[id].updateType(payload.type)
+    payload.frequency && oscillatorsT[id].updateFrequency(payload.frequency)
   }
 
   // Handle removal of oscillators
