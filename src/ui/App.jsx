@@ -41,8 +41,10 @@ export class App extends React.PureComponent {
   get transport () {
     return (
       <section className='transport'>
-        <button onClick={this.props.transportPlay}>{this.i18n.PLAY}</button>
-        <button onClick={this.props.transportStop}>{this.i18n.STOP}</button>
+        {this.props.transport.isPlaying &&
+          <button onClick={this.props.transportStop}>{this.i18n.STOP}</button>}
+        {!this.props.transport.isPlaying &&
+          <button onClick={this.props.transportPlay}>{this.i18n.PLAY}</button>}
       </section>
     )
   }
@@ -65,7 +67,8 @@ function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')
 
   return {
-    oscillators: state.oscillators
+    oscillators: state.oscillators,
+    transport: state.transport
   }
 }
 

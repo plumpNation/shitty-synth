@@ -8,6 +8,9 @@ declare namespace Synth {
 
   interface State {
     oscillators: Oscillators.State
+    transport: Transport.State
+    action: string
+    payload: any
   }
 
   declare namespace Oscillators {
