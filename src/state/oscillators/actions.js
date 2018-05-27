@@ -16,13 +16,11 @@ export default {
 }
 
 /**
- * @param {Synth.OscillatorModule.State} payload
  * @returns {Redux.Action}
  */
-function add (payload) {
+function add () {
   return {
-    type: ADD,
-    payload
+    type: ADD
   }
 }
 

@@ -1,6 +1,13 @@
 import logger from '../../lib/logger'
 import OscillatorActions from './actions'
 
+/** @type {Synth.OscillatorModule.State} */
+const defaultOscillator = {
+  frequency: 100,
+  type: 'sine',
+  isActive: true
+}
+
 export default reducer
 
 /**
@@ -11,7 +18,7 @@ export default reducer
 function reducer (state = [], action) {
   switch (action.type) {
     case OscillatorActions.ADD:
-      return state.concat(addOscillator(state, action.payload))
+      return state.concat(addOscillator(state, defaultOscillator))
 
     case OscillatorActions.UPDATE:
       return state.map(synth => {
@@ -34,13 +41,6 @@ function reducer (state = [], action) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
-/** @type {Synth.OscillatorModule.State} */
-const defaultOscillator = {
-  frequency: 100,
-  type: 'sine',
-  isActive: true
-}
-
 /**
  * @param {Synth.Oscillators.State} state
  * @param {Synth.OscillatorModule.State | undefined} payload
@@ -55,35 +55,6 @@ function addOscillator (state, payload) {
 
   /** @type {Synth.Oscillator.Id} */
   const lastInsertId = ((state[state.length - 1] || {}).id || 0)
-  const newOscillator = cleanPayload(payload) || defaultOscillator
 
-  return {...newOscillator, id: lastInsertId + 1}
-}
-
-/**
- * If we want to be able to persist redux state in the localStorage, we must
- * remove the circular dependencies that Redux adds to the payload.
- *
- * @param {Synth.OscillatorModule.State} payload
- * @returns {Synth.OscillatorModule.State | null}
- */
-function cleanPayload (payload) {
-  if (!isValidOscillator(payload)) {
-    return null
-  }
-
-  const {frequency, type, isActive} = payload
-
-  return {frequency, type, isActive}
-}
-
-/**
- * Checks that the data shares all keys in the defaultOscillator
- *
- * @see defaultOscillator
- * @param {Synth.OscillatorModule.State} data
- * @returns {boolean}
- */
-function isValidOscillator (data) {
-  return !(Object.keys(defaultOscillator).some(key => !data[key]))
+  return {...payload, id: lastInsertId + 1}
 }
