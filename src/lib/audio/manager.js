@@ -33,7 +33,6 @@ function updateAudio (state) {
 
       if (transport.isPlaying) {
         oscillatorsT[id].play()
-        oscillatorsT[id].isPlaying = true
       }
     })
   }
@@ -61,20 +60,16 @@ function updateAudio (state) {
     // more vanilla section of the codebase.
     if ([TransportActions.PLAY, TransportActions.STOP].indexOf(action) > -1) {
       if (transport.isPlaying) {
-        !oscillatorsT[id].isPlaying && oscillatorsT[id].play()
-        // We want this to be idempotent, so we leave a flag on the oscillator
-        // so we can avoid playing twice.
-        oscillatorsT[id].isPlaying = true
+        oscillatorsT[id].play()
       } else {
-        oscillatorsT[id].isPlaying && oscillatorsT[id].stop()
-        oscillatorsT[id].isPlaying = false
+        oscillatorsT[id].stop()
       }
     }
   })
 }
 
 // AUDIO
-export function createAudioPlayer (store) {
+export function createAudioManager (store) {
   const unsubscribe = store.subscribe(() => {
     updateAudio(store.getState())
   })

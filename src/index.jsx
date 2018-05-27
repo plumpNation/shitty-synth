@@ -6,13 +6,13 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
 
 import configureStore from './state/configureStore'
-import { createAudioPlayer } from './lib/audio/player'
+import { createAudioManager } from './lib/audio/manager'
 
 import App from './ui/App'
 
 const { persistor, store } = configureStore()
 
-createAudioPlayer(store)
+createAudioManager(store)
 
 // UI
 
