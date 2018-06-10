@@ -1,15 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import transportActions from '../state/transport/actions'
 import oscillatorActions from '../state/oscillators/actions'
 import OscillatorModule from './modules/oscillator/OscillatorModule'
+import Transport from './modules/transport/Transport'
 import logger from '../lib/logger'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
-  PLAY: 'Play',
-  STOP: 'Stop',
   ADD_OSCILLATOR: 'Add oscillator'
+}
+
+const synthStyle = {
+  padding: '1rem'
 }
 
 export class App extends React.PureComponent {
@@ -38,23 +40,12 @@ export class App extends React.PureComponent {
     )
   }
 
-  get transport () {
-    return (
-      <section className='transport'>
-        {this.props.transport.isPlaying &&
-          <button onClick={this.props.transportStop}>{this.i18n.STOP}</button>}
-        {!this.props.transport.isPlaying &&
-          <button onClick={this.props.transportPlay}>{this.i18n.PLAY}</button>}
-      </section>
-    )
-  }
-
   render () {
     logger.debug('App.render')
 
     return (
-      <section>
-        {this.transport}
+      <section className='synth' style={synthStyle}>
+        <Transport />
         {this.oscillators}
       </section>
     )
@@ -67,8 +58,7 @@ function mapStateToProps (state) {
   logger.debug(state, 'App.mapStateToProps')
 
   return {
-    oscillators: state.oscillators,
-    transport: state.transport
+    oscillators: state.oscillators
   }
 }
 
@@ -76,8 +66,6 @@ function mapDispatchToProps () {
   logger.debug('App.mapDispatchToProps')
 
   return {
-    oscillatorAdd: oscillatorActions.add,
-    transportPlay: transportActions.play,
-    transportStop: transportActions.stop
+    oscillatorAdd: oscillatorActions.add
   }
 }
