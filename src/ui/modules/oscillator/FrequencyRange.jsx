@@ -5,6 +5,23 @@ const defaultI18n = {
   WAVELENGTH: 'Frequency'
 }
 
+const sliderStyle = {
+  display: 'flex'
+}
+
+const sliderItemStyle = {
+  margin: '1rem'
+}
+
+const sliderInputContainerStyle = {
+  ...sliderItemStyle,
+  flex: 1
+}
+
+const sliderInputStyle = {
+  width: '100%'
+}
+
 class FrequencyRange extends React.PureComponent {
   /** @type {Synth.OscillatorModule.FrequencyRangeProps} */
   static defaultProps = {
@@ -21,16 +38,17 @@ class FrequencyRange extends React.PureComponent {
     logger.debug(this.props, 'FrequencyRange.render')
 
     return (
-      <div className='frequency-range'>
-        <label>
+      <div className='frequency-range' style={sliderStyle}>
+        <label style={sliderInputContainerStyle}>
           <input
+            style={sliderInputStyle}
             type='range'
             min='0'
             max='3000'
             onChange={this.props.onChange}
             value={this.props.value} />
         </label>
-        <span>{this.i18n.WAVELENGTH}: {this.props.value}</span>
+        <span style={sliderItemStyle}>{this.i18n.WAVELENGTH}: {this.props.value}</span>
       </div>
     )
   }
