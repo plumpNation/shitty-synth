@@ -16,9 +16,9 @@ const defaultI18n = {
 }
 
 class OscillatorModule extends React.PureComponent {
-  /** @type {Synth.OscillatorModule.State} */
+  /** @type {Synth.OscillatorModule.Props} */
   static defaultProps = {
-    id: null,
+    id: undefined,
     type: 'square',
     frequency: 100,
     i18n: defaultI18n,

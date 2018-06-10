@@ -49,25 +49,29 @@ declare namespace Synth {
     type ChangeEvent = ChangeEvent<HTMLSelectElement>
     type FrequencyChangeEvent = ChangeEvent<HTMLInputElement>
 
-    interface Props {
-      i18n?: I18n
-    }
-
     interface SelectProps extends Props {
+      i18n?: I18n,
       value?: Type
       onChange: (event: ChangeEvent) => void
     }
 
     interface FrequencyRangeProps extends Props {
+      i18n?: I18n,
       value?: Frequency
       onChange: (event: FrequencyChangeEvent) => void
     }
 
-    interface State {
+    interface Props {
       id?: Id
       type: Type
       frequency: Frequency
       isActive: boolean
+      i18n?: I18n
+    }
+  }
+
+  declare namespace Transport {
+    interface Props {
       i18n?: I18n
     }
   }
