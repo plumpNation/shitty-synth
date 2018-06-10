@@ -1,3 +1,11 @@
+/**
+ * The manager reacts to the update of the redux store. All functionality
+ * in this manager should be idempotent, and should be able to handle multiple
+ * store updates where some properties do not change. The manager should
+ * recognize that the property is unchanged and not re-run the pertinent
+ * functionality, rather allow it to simply continue.
+ */
+
 import Oscillator from '../oscillators/Oscillator'
 
 import TransportActions from '../../state/transport/actions'
@@ -21,6 +29,7 @@ function updateAudio (state) {
   } = state
 
   // handle creation of new oscillators
+  // `persist/REHYDRATE` is an action dispatched by the redux-persist module
   if (action === OscillatorActions.ADD || action === 'persist/REHYDRATE') {
     oscillators.forEach(oscillator => {
       const {id, type, frequency} = oscillator
