@@ -48,7 +48,7 @@ export class UIMidi extends React.PureComponent {
 export default connect(mapStateToProps, mapDispatchToProps())(UIMidi)
 
 function mapStateToProps (state) {
-  logger.warn(state, 'UIMidi.mapStateToProps')
+  logger.debug(state, 'UIMidi.mapStateToProps')
 
   return {...state.midi}
 }

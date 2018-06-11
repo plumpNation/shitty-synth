@@ -20,7 +20,7 @@ const oscillatorsT = {}
  *
  * @param {Synth.State} state
  */
-function updateAudio (state) {
+function update (state) {
   const {
     action,
     payload,
@@ -86,7 +86,7 @@ function updateAudio (state) {
 // AUDIO
 export function init (store) {
   const unsubscribe = store.subscribe(() => {
-    updateAudio(store.getState())
+    update(store.getState())
   })
 
   return unsubscribe
