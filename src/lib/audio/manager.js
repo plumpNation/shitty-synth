@@ -78,7 +78,7 @@ function updateAudio (state) {
 }
 
 // AUDIO
-export function createAudioManager (store) {
+export function init (store) {
   const unsubscribe = store.subscribe(() => {
     updateAudio(store.getState())
   })

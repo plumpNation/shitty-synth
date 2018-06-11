@@ -35,9 +35,19 @@ declare namespace Synth {
     }
   }
 
+  declare namespace Midi {
+    interface State {
+      devices: MidiInput[]
+    }
+  }
+
   declare namespace Transport {
     interface State {
       isPlaying: boolean
+    }
+
+    interface Props {
+      i18n?: I18n
     }
   }
 
@@ -66,12 +76,6 @@ declare namespace Synth {
       type: Type
       frequency: Frequency
       isActive: boolean
-      i18n?: I18n
-    }
-  }
-
-  declare namespace Transport {
-    interface Props {
       i18n?: I18n
     }
   }

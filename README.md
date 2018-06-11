@@ -19,3 +19,13 @@ yarn
 # run the watch build and dev server (parcel)
 yarn dev
 ```
+
+
+## File names
+
+state
+actions - redux actions
+reducer - redux reducer
+
+lib
+manager - Scripts to initialise store (like setting up midi devices) and run side effects.
