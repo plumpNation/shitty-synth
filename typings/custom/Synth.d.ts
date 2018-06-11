@@ -37,15 +37,11 @@ declare namespace Synth {
     type Type = 'sine'|'square'|'sawtooth'|'triangle'
 
     interface Props {
-      id?: Id
       type: Type
+      audioContext: AudioContext
       frequency: Frequency
+      id?: Id
       i18n?: I18n
-    }
-
-    interface Props {
-      type: Type,
-      frequency: Synth.Frequency
     }
   }
 

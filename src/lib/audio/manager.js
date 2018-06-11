@@ -38,7 +38,13 @@ function updateAudio (state) {
         return
       }
 
-      oscillatorsT[id] = new Oscillator({type, frequency})
+      if (!webAudioAvailable()) {
+        throw new Error('AudioContext unavailable in this browser')
+      }
+
+      const audioContext = new AudioContext()
+
+      oscillatorsT[id] = new Oscillator({type, frequency, audioContext})
 
       if (transport.isPlaying) {
         oscillatorsT[id].play()
@@ -84,4 +90,15 @@ export function init (store) {
   })
 
   return unsubscribe
+}
+
+/**
+ * @returns {boolean}
+ */
+function webAudioAvailable () {
+  try {
+    return !!AudioContext
+  } catch (err) {
+    return false
+  }
 }

@@ -4,17 +4,17 @@ class Oscillator {
    * @param {Synth.Oscillator.Props} props
    */
   constructor (props) {
-    const {type = 'square', frequency = 100} = props
-
-    if (!available()) {
-      throw new Error('AudioContext unavailable in this browser')
-    }
+    const {
+      type = 'square',
+      frequency = 100,
+      audioContext = new AudioContext()
+    } = props
 
     this.type = type
     this.frequency = frequency
 
     /** @type {AudioContext} */
-    this.audioContext = new AudioContext()
+    this.audioContext = audioContext
   }
 
   play () {
@@ -61,17 +61,6 @@ function createOscillator (audioContext, type, frequency) {
   oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime) // value in hertz
 
   return oscillator
-}
-
-/**
- * @returns {boolean}
- */
-function available () {
-  try {
-    return !!AudioContext
-  } catch (err) {
-    return false
-  }
 }
 
 export default Oscillator
