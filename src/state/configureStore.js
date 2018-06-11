@@ -29,7 +29,8 @@ const middleware = compose(
 )
 
 export const defaultState = {
-  oscillators: []
+  oscillators: [],
+  devices: []
 }
 
 export default () => {

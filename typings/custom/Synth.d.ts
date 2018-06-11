@@ -89,5 +89,12 @@ declare namespace Synth {
     }
   }
 
+  declare namespace UIMidi {
+    interface Props {
+      i18n?: I18n,
+      devices: MidiInput[]
+    }
+  }
+
   // END UI COMPONENTS
 }

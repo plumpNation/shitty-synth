@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import oscillatorActions from '../state/oscillators/actions'
 import UIOscillator from './oscillator/UIOscillator'
 import UITransport from './transport/UITransport'
+import UIMidi from './midi/UIMidi'
 import logger from '../lib/logger'
 
 /** @type {Synth.I18n} */
@@ -46,6 +47,7 @@ export class App extends React.PureComponent {
     return (
       <section className='synth' style={synthStyle}>
         <UITransport />
+        <UIMidi />
         {this.oscillators}
       </section>
     )

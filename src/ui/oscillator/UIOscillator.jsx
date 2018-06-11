@@ -44,29 +44,25 @@ class UIOscillator extends React.PureComponent {
     this.props.onRemoved({id: this.props.id})
   }
 
-  transport () {
-    return (
-      <div className='oscillator-transport'>
-        <button onClick={this.remove}>{this.i18n.REMOVE}</button>
-      </div>
-    )
+  inputs = () => {
+    return (<section className='oscillator-inputs'>
+      <UIWaveTypeInput
+        onChange={this.updateType}
+        value={this.props.type}
+      />
+
+      <UIFrequencyInput
+        onChange={this.updateFrequency}
+        value={this.props.frequency}
+      />
+      <p>{this.props.isActive && this.i18n.ACTIVE}</p>
+    </section>)
   }
 
-  controls () {
-    return (
-      <section className='oscillator-controls'>
-        <UIWaveTypeInput
-          onChange={this.updateType}
-          value={this.props.type}
-        />
-
-        <UIFrequencyInput
-          onChange={this.updateFrequency}
-          value={this.props.frequency}
-        />
-        <p>{this.props.isActive && this.i18n.ACTIVE}</p>
-      </section>
-    )
+  controls = () => {
+    return (<div className='oscillator-controls'>
+      <button onClick={this.remove}>{this.i18n.REMOVE}</button>
+    </div>)
   }
 
   render () {
@@ -75,8 +71,8 @@ class UIOscillator extends React.PureComponent {
     return (
       <section className='oscillator {this.props.type}'>
         <h3>{this.i18n.OSCILLATOR}: {this.props.type}</h3>
+        {this.inputs()}
         {this.controls()}
-        {this.transport()}
       </section>
     )
   }
