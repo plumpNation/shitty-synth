@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import oscillatorActions from '../state/oscillators/actions'
-import OscillatorModule from './modules/oscillator/OscillatorModule'
-import Transport from './modules/transport/Transport'
+import UIOscillator from './oscillator/UIOscillator'
+import UITransport from './transport/UITransport'
 import logger from '../lib/logger'
 
 /** @type {Synth.I18n} */
@@ -34,7 +34,7 @@ export class App extends React.PureComponent {
           {this.i18n.ADD_OSCILLATOR}
         </button>
         {this.props.oscillators.map(oscillator => (
-          <OscillatorModule key={oscillator.id} {...oscillator} />
+          <UIOscillator key={oscillator.id} {...oscillator} />
         ))}
       </section>
     )
@@ -45,7 +45,7 @@ export class App extends React.PureComponent {
 
     return (
       <section className='synth' style={synthStyle}>
-        <Transport />
+        <UITransport />
         {this.oscillators}
       </section>
     )

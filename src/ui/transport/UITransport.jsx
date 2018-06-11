@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import logger from '../../../lib/logger'
-import transportActions from '../../../state/transport/actions'
+import logger from '../../lib/logger'
+import transportActions from '../../state/transport/actions'
 
 const defaultI18n = {
   PLAY: 'Play',
   STOP: 'Stop'
 }
 
-export class Transport extends React.PureComponent {
+export class UITransport extends React.PureComponent {
   /**
    * @returns {Synth.I18n}
    */
@@ -17,7 +17,7 @@ export class Transport extends React.PureComponent {
   }
 
   render () {
-    logger.debug('Transport.render')
+    logger.debug('UITransport.render')
 
     return (
       <section className='transport'>
@@ -30,10 +30,10 @@ export class Transport extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(Transport)
+export default connect(mapStateToProps, mapDispatchToProps())(UITransport)
 
 function mapStateToProps (state) {
-  logger.debug(state, 'Transport.mapStateToProps')
+  logger.debug(state, 'UITransport.mapStateToProps')
 
   return {
     transport: state.transport
@@ -41,7 +41,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps () {
-  logger.debug('Transport.mapDispatchToProps')
+  logger.debug('UITransport.mapDispatchToProps')
 
   return {
     transportPlay: transportActions.play,

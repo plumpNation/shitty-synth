@@ -1,3 +1,5 @@
+import UIWaveTypeInput from "src/ui/oscillator/UIWaveTypeInput";
+
 export = Synth;
 export as namespace Synth;
 
@@ -6,12 +8,24 @@ declare namespace Synth {
     [index: string]: string
   }
 
+  // REDUX STATE
+
   interface State {
     oscillators: Oscillators.State
     transport: Transport.State
     action: string
     payload: any
   }
+
+  declare namespace Midi {
+    interface State {
+      devices: MidiInput[]
+    }
+  }
+
+  // END REDUX STATE
+
+  // APPLICATION ENTITIES
 
   declare namespace Oscillators {
     type State = Oscillator[]
@@ -35,13 +49,11 @@ declare namespace Synth {
     }
   }
 
-  declare namespace Midi {
-    interface State {
-      devices: MidiInput[]
-    }
-  }
+  // END APPLICATION ENTITIES
 
-  declare namespace Transport {
+  // UI COMPONENTS
+
+  declare namespace UITransport {
     interface State {
       isPlaying: boolean
     }
@@ -51,32 +63,31 @@ declare namespace Synth {
     }
   }
 
-  declare namespace OscillatorModule {
-    type Id = Oscillator.Id
-    type Type = Oscillator.Type
-    type Frequency = Oscillator.Frequency
-
-    type ChangeEvent = ChangeEvent<HTMLSelectElement>
-    type FrequencyChangeEvent = ChangeEvent<HTMLInputElement>
-
-    interface SelectProps extends Props {
-      i18n?: I18n,
-      value?: Type
-      onChange: (event: ChangeEvent) => void
-    }
-
-    interface FrequencyRangeProps extends Props {
-      i18n?: I18n,
-      value?: Frequency
-      onChange: (event: FrequencyChangeEvent) => void
-    }
-
+  declare namespace UIOscillator {
     interface Props {
-      id?: Id
-      type: Type
-      frequency: Frequency
+      id?: Oscillator.Id
+      type: Oscillator.Type
+      frequency: Oscillator.Frequency
       isActive: boolean
       i18n?: I18n
     }
   }
+
+  declare namespace UIFrequencyRangeInput {
+    interface Props {
+      i18n?: I18n,
+      value?: Oscillator.Frequency
+      onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    }
+  }
+
+  declare namespace UIWaveTypeInput {
+    interface Props {
+      i18n?: I18n,
+      value?: Oscillator.Type
+      onChange: (event: ChangeEvent<HTMLInputElement>) => void
+    }
+  }
+
+  // END UI COMPONENTS
 }

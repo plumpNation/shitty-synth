@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import TypeSelector from './TypeSelector'
-import FrequencyRange from './FrequencyRange'
+import UIWaveTypeInput from './UIWaveTypeInput'
+import UIFrequencyInput from './UIFrequencyRangeInput'
 
-import oscillatorActions from '../../../state/oscillators/actions'
+import oscillatorActions from '../../state/oscillators/actions'
 
-import logger from '../../../lib/logger'
+import logger from '../../lib/logger'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
@@ -15,8 +15,8 @@ const defaultI18n = {
   ACTIVE: 'Active'
 }
 
-class OscillatorModule extends React.PureComponent {
-  /** @type {Synth.OscillatorModule.Props} */
+class UIOscillator extends React.PureComponent {
+  /** @type {Synth.UIOscillator.Props} */
   static defaultProps = {
     id: undefined,
     type: 'square',
@@ -55,12 +55,12 @@ class OscillatorModule extends React.PureComponent {
   controls () {
     return (
       <section className='oscillator-controls'>
-        <TypeSelector
+        <UIWaveTypeInput
           onChange={this.updateType}
           value={this.props.type}
         />
 
-        <FrequencyRange
+        <UIFrequencyInput
           onChange={this.updateFrequency}
           value={this.props.frequency}
         />
@@ -82,10 +82,10 @@ class OscillatorModule extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(OscillatorModule)
+export default connect(mapStateToProps, mapDispatchToProps())(UIOscillator)
 
 function mapStateToProps (state) {
-  logger.debug(state, 'OscillatorModule.mapStateToProps')
+  logger.debug(state, 'UIOscillator.mapStateToProps')
 
   return {
     oscillators: state.oscillators
@@ -93,7 +93,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps () {
-  logger.debug('OscillatorModule.mapDispatchToProps')
+  logger.debug('UIOscillator.mapDispatchToProps')
 
   return {
     onUpdated: oscillatorActions.update,

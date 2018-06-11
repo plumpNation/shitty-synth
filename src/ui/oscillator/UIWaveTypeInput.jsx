@@ -1,5 +1,5 @@
 import React from 'react'
-import logger from '../../../lib/logger'
+import logger from '../../lib/logger'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
@@ -10,8 +10,8 @@ const defaultI18n = {
   TYPE: 'Type'
 }
 
-class OscillatorSelect extends React.PureComponent {
-  /** @type {Synth.OscillatorModule.SelectProps} */
+class UIWaveTypeInput extends React.PureComponent {
+  /** @type {Synth.UIWaveTypeInput.Props} */
   static defaultProps = {
     i18n: defaultI18n,
     value: 'sine',
@@ -23,12 +23,12 @@ class OscillatorSelect extends React.PureComponent {
   }
 
   render () {
-    logger.debug(this.props, 'OscillatorSelect.render')
+    logger.debug(this.props, 'UIWaveTypeInput.render')
 
     return (
-      <div className='oscillator-select'>
+      <div className='wave-type-input'>
         <label>
-          <span className='oscillator-type-label-text'>{this.i18n.TYPE}</span>
+          <span className='wave-type-input__label__text'>{this.i18n.TYPE}</span>
           <select onChange={this.props.onChange} value={this.props.value}>
             <option value='sine'>{this.i18n.SINE}</option>
             <option value='square'>{this.i18n.SQUARE}</option>
@@ -41,4 +41,4 @@ class OscillatorSelect extends React.PureComponent {
   }
 }
 
-export default OscillatorSelect
+export default UIWaveTypeInput

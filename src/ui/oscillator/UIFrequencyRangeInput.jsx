@@ -1,5 +1,5 @@
 import React from 'react'
-import logger from '../../../lib/logger'
+import logger from '../../lib/logger'
 
 const defaultI18n = {
   WAVELENGTH: 'Frequency'
@@ -22,8 +22,8 @@ const sliderInputStyle = {
   width: '100%'
 }
 
-class FrequencyRange extends React.PureComponent {
-  /** @type {Synth.OscillatorModule.FrequencyRangeProps} */
+class UIFrequencyRange extends React.PureComponent {
+  /** @type {Synth.UIFrequencyRangeInput.Props} */
   static defaultProps = {
     value: 50,
     i18n: defaultI18n,
@@ -35,7 +35,7 @@ class FrequencyRange extends React.PureComponent {
   }
 
   render () {
-    logger.debug(this.props, 'FrequencyRange.render')
+    logger.debug(this.props, 'UIFrequencyRange.render')
 
     return (
       <div className='frequency-range' style={sliderStyle}>
@@ -54,4 +54,4 @@ class FrequencyRange extends React.PureComponent {
   }
 }
 
-export default FrequencyRange
+export default UIFrequencyRange

@@ -1,7 +1,7 @@
 import logger from '../../lib/logger'
 import OscillatorActions from './actions'
 
-/** @type {Synth.OscillatorModule.State} */
+/** @type {Synth.UIOscillator.State} */
 const defaultOscillator = {
   frequency: 100,
   type: 'sine',
@@ -43,8 +43,8 @@ function reducer (state = [], action) {
 
 /**
  * @param {Synth.Oscillators.State} state
- * @param {Synth.OscillatorModule.State | undefined} payload
- * @returns {Synth.OscillatorModule.State}
+ * @param {Synth.UIOscillator.State | undefined} payload
+ * @returns {Synth.UIOscillator.State}
  */
 function addOscillator (state, payload) {
   if (state.length === 6) {
