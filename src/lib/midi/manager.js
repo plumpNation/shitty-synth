@@ -15,7 +15,9 @@ export function init (store) {
 function updateAccess (store) {
   const midi = navigator.requestMIDIAccess()
 
-  midi.then(access => {
-    store.dispatch(MidiActions.newAccess(access))
-  })
+  midi
+    .then(access => {
+      store.dispatch(MidiActions.newAccess(access))
+    })
+    .catch(console.error)
 }
