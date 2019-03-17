@@ -7,6 +7,7 @@
  */
 
 import Oscillator from '../oscillators/Oscillator'
+import Filter from '../filters/Filter'
 
 import TransportActions from '../../state/transport/actions'
 import OscillatorActions from '../../state/oscillators/actions'
@@ -32,31 +33,19 @@ function update (state) {
   // `persist/REHYDRATE` is an action dispatched by the redux-persist module
   if (action === OscillatorActions.ADD || action === 'persist/REHYDRATE') {
     oscillators.forEach(oscillator => {
-      const {id, type, frequency} = oscillator
-
-      if (oscillatorsT[id]) {
-        return
-      }
-
-      if (!webAudioAvailable()) {
-        throw new Error('AudioContext unavailable in this browser')
-      }
-
-      const audioContext = new AudioContext()
-
-      oscillatorsT[id] = new Oscillator({type, frequency, audioContext})
+      const id = createIfNotExists(oscillator)
 
       if (transport.isPlaying) {
         oscillatorsT[id].play()
       }
-    })
+    });
   }
 
   if (action === OscillatorActions.UPDATE) {
     const {id} = payload
 
-    payload.type && oscillatorsT[id].updateType(payload.type)
-    payload.frequency && oscillatorsT[id].updateFrequency(payload.frequency)
+    if (payload.type) oscillatorsT[id].type = payload.type
+    if (payload.frequency) oscillatorsT[id].frequency = payload.frequency
   }
 
   // Handle removal of oscillators
@@ -64,11 +53,7 @@ function update (state) {
 
   Object.keys(oscillatorsT).forEach(id => {
     if (action === OscillatorActions.REMOVE) {
-      if (oscillatorIds.indexOf(parseInt(id, 10)) < 0) {
-        oscillatorsT[id].kill()
-
-        delete oscillatorsT[id]
-      }
+      filterOscillators(id, oscillatorIds);
     }
 
     // I've exposed the action on the state so we can utilise it in this
@@ -100,5 +85,40 @@ function webAudioAvailable () {
     return !!AudioContext
   } catch (err) {
     return false
+  }
+}
+
+/**
+ * @param {Object} oscillator
+ */
+function createIfNotExists(oscillator) {
+  const {id, type, frequency} = oscillator
+
+  if (oscillatorsT[id]) {
+    return
+  }
+
+  if (!webAudioAvailable()) {
+    throw new Error('AudioContext unavailable in this browser')
+  }
+
+  const audioContext = new AudioContext()
+
+  oscillatorsT[id] = new Oscillator({type, frequency, audioContext})
+
+  return id;
+}
+
+/**
+ * Remove all oscillators not found in the supplied array
+ *
+ * @param {string} id
+ * @param {number[]} oscillatorIds
+ */
+function filterOscillators(id, oscillatorIds) {
+  if (oscillatorIds.indexOf(parseInt(id, 10)) < 0) {
+    oscillatorsT[id].kill()
+
+    delete oscillatorsT[id]
   }
 }

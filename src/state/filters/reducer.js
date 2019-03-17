@@ -1,36 +1,37 @@
 import logger from '../../lib/logger'
-import OscillatorActions from './actions'
+import FilterActions from './actions'
+import Filter from '../../lib/filters/Filter'
 
-/** @type {Synth.UIOscillator.State} */
-const defaultOscillator = {
+/** @type {Synth.UIFilter.State} */
+const defaultFilter = {
   frequency: 100,
-  type: 'sine',
+  type: Filter.LOW_PASS,
   isActive: true
 }
 
 export default reducer
 
 /**
- * @param {Synth.Oscillators.State} state
+ * @param {Synth.Filters.State} state
  * @param {Redux.Action} action
- * @returns {Synth.Oscillators.State}
+ * @returns {Synth.Filters.State}
  */
 function reducer (state = [], action) {
   switch (action.type) {
-    case OscillatorActions.ADD:
-      return state.concat(addOscillator(state, defaultOscillator))
+    case FilterActions.ADD:
+      return state.concat(addFilter(state, defaultFilter))
 
-    case OscillatorActions.UPDATE:
-      return state.map(synth => {
-        if (synth.id !== action.payload.id) {
-          return synth
+    case FilterActions.UPDATE:
+      return state.map(filter => {
+        if (filter.id !== action.payload.id) {
+          return filter
         }
 
-        return {...synth, ...action.payload}
+        return {...filter, ...action.payload}
       })
 
-    case OscillatorActions.REMOVE:
-      return state.filter(synth => synth.id !== action.payload.id)
+    case FilterActions.REMOVE:
+      return state.filter(filter => filter.id !== action.payload.id)
 
     default:
       return state
@@ -42,11 +43,11 @@ function reducer (state = [], action) {
 // /////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @param {Synth.Oscillators.State} state
- * @param {Synth.UIOscillator.State | undefined} payload
- * @returns {Synth.UIOscillator.State}
+ * @param {Synth.Filters.State} state
+ * @param {Synth.UIFilter.State | undefined} payload
+ * @returns {Synth.UIFilter.State}
  */
-function addOscillator (state, payload) {
+function addFilter (state, payload) {
   if (state.length === 6) {
     logger.warn('Jeff says "no more oscillators for you"')
 

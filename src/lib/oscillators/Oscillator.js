@@ -1,3 +1,6 @@
+/**
+ * Facades the Web Audio API
+ */
 class Oscillator {
   /**
    *
@@ -5,20 +8,34 @@ class Oscillator {
    */
   constructor (props) {
     const {
-      type = 'square',
+      type = Oscillator.SQUARE,
       frequency = 100,
+      detune = 0,
       audioContext = new AudioContext()
     } = props
 
-    this.type = type
-    this.frequency = frequency
+    /** @type {Synth.Oscillator.Type} */
+    this._type = type
+    /** @type {Synth.Oscillator.Detune} */
+    this._detune = detune
+    /** @type {Synth.Oscillator.Frequency} */
+    this._frequency = frequency
 
     /** @type {AudioContext} */
     this.audioContext = audioContext
   }
 
   play () {
-    this.oscillator = createOscillator(this.audioContext, this.type, this.frequency)
+    this.oscillator = this.audioContext.createOscillator()
+
+    // these should be set after the oscillator is created
+    this.type = this._type
+    this.detune = this._detune
+    this.frequency = this._frequency
+
+    // @todo extract the connection
+    this.oscillator.connect(this.audioContext.destination)
+
     this.oscillator.start()
   }
 
@@ -30,37 +47,39 @@ class Oscillator {
     this.oscillator && this.oscillator.stop()
   }
 
-  updateType (type) {
-    this.type = type
+  set detune (detune) {
+    this._detune = detune
+
+    if (this.oscillator) this.oscillator.detune.value = detune
+  }
+
+  set type (type) {
+    this._type = type
 
     if (this.oscillator) this.oscillator.type = type
   }
 
-  updateFrequency (frequency) {
-    this.frequency = frequency
+  set frequency (frequency) {
+    this._frequency = frequency
 
     if (this.oscillator) {
-      this.oscillator.frequency.setValueAtTime(this.frequency, this.audioContext.currentTime)
+      this.oscillator.frequency.setValueAtTime(
+        frequency,
+        this.audioContext.currentTime
+      )
     }
   }
 }
 
-/**
- * @param {AudioContext} audioContext
- * @param {Synth.Oscillator.Type} type
- * @param {Synth.Oscillator.Frequency} frequency
- * @returns {OscillatorNode}
- */
-function createOscillator (audioContext, type, frequency) {
-  const oscillator = audioContext.createOscillator()
-
-  oscillator.connect(audioContext.destination)
-
-  oscillator.type = type
-
-  oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime) // value in hertz
-
-  return oscillator
-}
+/** @type {Synth.Oscillator.Type} */
+Oscillator.SINE = 'sine';
+/** @type {Synth.Oscillator.Type} */
+Oscillator.SQUARE = 'square';
+/** @type {Synth.Oscillator.Type} */
+Oscillator.SAWTOOTH = 'sawtooth';
+/** @type {Synth.Oscillator.Type} */
+Oscillator.TRIANGLE = 'triangle';
+/** @type {Synth.Oscillator.Type} */
+Oscillator.CUSTOM = 'custom';
 
 export default Oscillator

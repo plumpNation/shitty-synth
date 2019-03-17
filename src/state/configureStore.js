@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import oscillatorsReducer from '../state/oscillators/reducer'
+import filtersReducer from '../state/filters/reducer'
 import transportReducer from '../state/transport/reducer'
 import midiReducer from '../state/midi/reducer'
 
@@ -15,6 +16,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   oscillators: oscillatorsReducer,
+  filters: filtersReducer,
   transport: transportReducer,
   action: (_, action) => action.type,
   payload: (_, action) => action.payload || {},

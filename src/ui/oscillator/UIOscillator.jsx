@@ -69,7 +69,7 @@ class UIOscillator extends React.PureComponent {
     logger.debug(this.props, 'Oscillator.render')
 
     return (
-      <section className='oscillator {this.props.type}'>
+      <section className={`oscillator ${this.props.type}`}>
         <h3>{this.i18n.OSCILLATOR}: {this.props.type}</h3>
         {this.inputs()}
         {this.controls()}
