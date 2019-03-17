@@ -1,5 +1,3 @@
-import UIWaveTypeInput from "src/ui/oscillator/UIWaveTypeInput";
-
 export = Synth;
 export as namespace Synth;
 
@@ -96,7 +94,6 @@ declare namespace Synth {
       i18n?: I18n
     }
   }
-
   declare namespace UIFilter {
     interface Props {
       type: Filter.Type
@@ -109,7 +106,6 @@ declare namespace Synth {
       i18n?: I18n,
       onChange?: (event) => void
     }
-
     interface State {
       id?: Id
       type?: Filter.Type
@@ -118,6 +114,16 @@ declare namespace Synth {
       detune?: Filter.Detune
       quality?: Filter.Quality
       isActive?: boolean
+    }
+  }
+
+  declare namespace UISliderInput {
+    interface Props {
+      min: number,
+      max: number,
+      name?: string,
+      value?: number,
+      onChange: (event: ChangeEvent<HTMLInputElement>) => void
     }
   }
 
