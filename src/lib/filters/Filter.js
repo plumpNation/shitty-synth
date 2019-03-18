@@ -34,9 +34,11 @@ class Filter {
 
     /** @type {AudioContext} */
     this.audioContext = audioContext
+  }
 
+  set connection (output) {
     // @todo extract the connection
-    this.filter.connect(this.audioContext.destination)
+    this.filter.connect(output)
   }
 
   /**

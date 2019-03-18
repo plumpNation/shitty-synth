@@ -23,10 +23,10 @@ class UIFrequencyRange extends React.PureComponent {
           <input
             className={sliderInput}
             type='range'
-            min='0'
-            max='3000'
-            onChange={this.props.onChange}
+            min={this.props.min}
+            max={this.props.max}
             value={this.props.value}
+            onChange={this.props.onChange}
           />
           <span>{this.props.name}: {this.props.value}</span>
         </label>

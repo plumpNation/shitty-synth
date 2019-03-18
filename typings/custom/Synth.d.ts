@@ -40,9 +40,26 @@ declare namespace Synth {
       type: Type
       audioContext: AudioContext
       frequency: Frequency
+      connection?: Connection
       detune?: Detune
       id?: Id
       i18n?: I18n
+    }
+  }
+
+  declare namespace Connections {
+    type State = Connection[]
+  }
+
+  declare namespace Connection {
+    type Output = AudioNode | AudioParam
+    type InputIndex = number | undefined
+    type OutputIndex = number | undefined
+
+    type Object = {
+      output: Output,
+      inputIndex: InputIndex,
+      outputIndex: OutputIndex
     }
   }
 

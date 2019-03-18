@@ -11,6 +11,7 @@ class Oscillator {
       type = Oscillator.SQUARE,
       frequency = 100,
       detune = 0,
+      connection = {},
       audioContext = new AudioContext()
     } = props
 
@@ -20,6 +21,8 @@ class Oscillator {
     this._detune = detune
     /** @type {Synth.Oscillator.Frequency} */
     this._frequency = frequency
+    /** @type {Synth.Connection.Object} */
+    this._connection = connection
 
     /** @type {AudioContext} */
     this.audioContext = audioContext
@@ -33,10 +36,18 @@ class Oscillator {
     this.detune = this._detune
     this.frequency = this._frequency
 
-    // @todo extract the connection
-    this.oscillator.connect(this.audioContext.destination)
+    if (this._connection) {
+      this.setConnection(this._connection)
+    }
 
     this.oscillator.start()
+  }
+
+  /**
+   * @param {Synth.Connection.Object} params
+   */
+  setConnection({output, outputIndex, inputIndex}) {
+    this.oscillator.connect(output, outputIndex, inputIndex)
   }
 
   stop () {

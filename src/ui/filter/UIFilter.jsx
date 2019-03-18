@@ -59,10 +59,37 @@ class UIFilter extends React.PureComponent {
   sliders = () => {
     return (
       <div className="filter-sliders">
-        <UISliderInput name={this.i18n.FREQUENCY} onChange={this.updateFrequency} />
-        <UISliderInput name={this.i18n.DETUNE} onChange={this.updateDetune} />
-        <UISliderInput name={this.i18n.GAIN} onChange={this.updateGain} />
-        <UISliderInput name={this.i18n.QUALITY} onChange={this.updateQuality} />
+        <UISliderInput
+          name={this.i18n.FREQUENCY}
+          onChange={this.updateFrequency}
+          min={0}
+          max={5000}
+          value={this.props.frequency}
+        />
+
+        <UISliderInput
+          name={this.i18n.DETUNE}
+          onChange={this.updateDetune}
+          min={0}
+          max={100}
+          value={this.props.detune}
+        />
+
+        <UISliderInput
+          name={this.i18n.GAIN}
+          onChange={this.updateGain}
+          min={0}
+          max={100}
+          value={this.props.gain}
+        />
+
+        <UISliderInput
+          name={this.i18n.QUALITY}
+          onChange={this.updateQuality}
+          min={0}
+          max={100}
+          value={this.props.quality}
+        />
       </div>
     )
   }
