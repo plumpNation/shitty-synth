@@ -3,17 +3,17 @@ import './index.styl'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/es/integration/react'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import configureStore from './state/configureStore'
-import { init as midiInit } from './lib/midi/manager'
+// import { init as midiInit } from './lib/midi/manager'
 import { init as oscillatorInit } from './lib/oscillator/manager'
 
 import App from './ui/App'
 
 const { persistor, store } = configureStore()
 
-midiInit(store)
+// midiInit(store)
 oscillatorInit(store)
 
 // UI

@@ -7,7 +7,7 @@
  */
 
 import Oscillator from '../oscillators/Oscillator'
-import Filter from '../filters/Filter'
+// import Filter from '../filters/Filter'
 
 import TransportActions from '../../state/transport/actions'
 import OscillatorActions from '../../state/oscillators/actions'
@@ -31,14 +31,16 @@ function update (state) {
 
   // handle creation of new oscillators
   // `persist/REHYDRATE` is an action dispatched by the redux-persist module
-  if (action === OscillatorActions.ADD || action === 'persist/REHYDRATE') {
-    oscillators.forEach(oscillator => {
-      const id = createIfNotExists(oscillator)
+  if (action === OscillatorActions.ADD ||
+    action === TransportActions.PLAY ||
+    action === 'persist/REHYDRATE') {
+    if (transport.isPlaying) {
+      oscillators.forEach(oscillator => {
+        const id = createIfNotExists(oscillator)
 
-      if (transport.isPlaying) {
         oscillatorsT[id].play()
-      }
-    });
+      })
+    };
   }
 
   if (action === OscillatorActions.UPDATE) {
@@ -89,10 +91,10 @@ function webAudioAvailable () {
 }
 
 /**
- * @param {Object} oscillator
+ * @param {Synth.Oscillator.State} oscillator
  */
 function createIfNotExists(oscillator) {
-  const {id, type, frequency} = oscillator
+  const {id, shape, frequency} = oscillator
 
   if (oscillatorsT[id]) {
     return
@@ -104,7 +106,7 @@ function createIfNotExists(oscillator) {
 
   const audioContext = new AudioContext()
 
-  oscillatorsT[id] = new Oscillator({type, frequency, audioContext})
+  oscillatorsT[id] = new Oscillator({shape, frequency, audioContext})
 
   return id;
 }

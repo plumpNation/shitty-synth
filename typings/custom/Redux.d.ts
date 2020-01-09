@@ -8,6 +8,7 @@ declare namespace Redux {
   interface Reducer extends redux.Reducer {}
 
   interface Action extends redux.Action {
-    payload?: any
+    payload?: any,
+    type: String,
   }
 }

@@ -2,7 +2,7 @@ import logger from '../../lib/logger'
 import FilterActions from './actions'
 import Filter from '../../lib/filters/Filter'
 
-/** @type {Synth.UIFilter.State} */
+/** @type {Synth.Filter.State} */
 const defaultFilter = {
   frequency: 100,
   type: Filter.LOW_PASS,
@@ -44,8 +44,8 @@ function reducer (state = [], action) {
 
 /**
  * @param {Synth.Filters.State} state
- * @param {Synth.UIFilter.State | undefined} payload
- * @returns {Synth.UIFilter.State}
+ * @param {Synth.Filter.State | undefined} payload
+ * @returns {Synth.Filter.State}
  */
 function addFilter (state, payload) {
   if (state.length === 6) {

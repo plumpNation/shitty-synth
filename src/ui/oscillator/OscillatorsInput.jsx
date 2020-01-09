@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import {connect} from 'react-redux'
 
-import UIWaveTypeInput from './UIWaveTypeInput'
-import UIFrequencyInput from './UIFrequencyRangeInput'
+import WaveShapeInput from './WaveShapeInput'
+import FrequencyInput from './FrequencyRangeInput'
 
 import oscillatorActions from '../../state/oscillators/actions'
 
@@ -15,14 +15,12 @@ const defaultI18n = {
   ACTIVE: 'Active'
 }
 
-class UIOscillator extends React.PureComponent {
-  /** @type {Synth.UIOscillator.Props} */
+class OscillatorsInput extends PureComponent {
+  /** @type {Partial<Synth.Oscillator.Props>} */
   static defaultProps = {
-    id: undefined,
-    type: 'square',
+    shape: 'square',
     frequency: 100,
-    i18n: defaultI18n,
-    isActive: false
+    i18n: defaultI18n
   }
 
   /**
@@ -45,28 +43,32 @@ class UIOscillator extends React.PureComponent {
   }
 
   inputs = () => {
-    return (<section className='oscillator-inputs'>
-      <UIWaveTypeInput
-        onChange={this.updateType}
-        value={this.props.type}
-      />
+    return (
+      <section className="oscillator-inputs">
+        <WaveShapeInput
+          onChange={this.updateType}
+          value={this.props.type}
+        />
 
-      <UIFrequencyInput
-        onChange={this.updateFrequency}
-        value={this.props.frequency}
-      />
-      <p>{this.props.isActive && this.i18n.ACTIVE}</p>
-    </section>)
+        <FrequencyInput
+          onChange={this.updateFrequency}
+          value={this.props.frequency}
+        />
+        <p>{this.props.isActive && this.i18n.ACTIVE}</p>
+      </section>
+    )
   }
 
   controls = () => {
-    return (<div className='oscillator-controls'>
-      <button onClick={this.remove}>{this.i18n.REMOVE}</button>
-    </div>)
+    return (
+      <div className='oscillator-controls'>
+        <button onClick={this.remove}>{this.i18n.REMOVE}</button>
+      </div>
+    )
   }
 
   render () {
-    logger.debug(this.props, 'Oscillator.render')
+    logger.debug(this.props, 'OscillatorsInput.render')
 
     return (
       <section className={`oscillator ${this.props.type}`}>
@@ -78,10 +80,10 @@ class UIOscillator extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(UIOscillator)
+export default connect(mapStateToProps, mapDispatchToProps())(OscillatorsInput)
 
 function mapStateToProps (state) {
-  logger.debug(state, 'UIOscillator.mapStateToProps')
+  logger.debug(state, 'OscillatorsInput.mapStateToProps')
 
   return {
     oscillators: state.oscillators
@@ -89,7 +91,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps () {
-  logger.debug('UIOscillator.mapDispatchToProps')
+  logger.debug('OscillatorsInput.mapDispatchToProps')
 
   return {
     onUpdated: oscillatorActions.update,

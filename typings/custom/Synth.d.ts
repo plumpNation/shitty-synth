@@ -33,11 +33,14 @@ declare namespace Synth {
   declare namespace Oscillator {
     type Id = number
     type Frequency = number
-    type Type = OscillatorType
+    type Shape = OscillatorType
     type Detune = number
 
+    type InputIndex = number | undefined
+    type OutputIndex = number | undefined
+
     interface Props {
-      type: Type
+      shape: Shape
       audioContext: AudioContext
       frequency: Frequency
       connection?: Connection
@@ -45,22 +48,16 @@ declare namespace Synth {
       id?: Id
       i18n?: I18n
     }
+
+    interface Connection {
+      output: AudioNode,
+      inputIndex: InputIndex,
+      outputIndex: OutputIndex
+    }
   }
 
   declare namespace Connections {
     type State = Connection[]
-  }
-
-  declare namespace Connection {
-    type Output = AudioNode | AudioParam
-    type InputIndex = number | undefined
-    type OutputIndex = number | undefined
-
-    type Object = {
-      output: Output,
-      inputIndex: InputIndex,
-      outputIndex: OutputIndex
-    }
   }
 
   declare namespace Filters {
@@ -78,20 +75,22 @@ declare namespace Synth {
     interface Props {
       type: Type
       audioContext: AudioContext
+      isActive: boolean
       id?: Id
       frequency?: Frequency
       gain?: Gain
       quality?: Quality
       detune?: Detune
       i18n?: I18n
+      onChange?: (event) => void
     }
   }
 
   // END APPLICATION ENTITIES
 
-  // UI COMPONENTS
+  //  COMPONENTS
 
-  declare namespace UITransport {
+  declare namespace Transport {
     interface State {
       isPlaying: boolean
     }
@@ -101,71 +100,70 @@ declare namespace Synth {
     }
   }
 
-  declare namespace UIOscillator {
+  declare interface FilterState {
+    id?: Id;
+    type?: Filter.Type;
+    frequency?: Filter.Frequency;
+    gain?: Filter.Gain;
+    detune?: Filter.Detune;
+    quality?: Filter.Quality;
+    isActive?: boolean;
+  }
+
+  declare namespace Oscillator {
     interface Props {
-      type: Oscillator.Type
+      type: Oscillator.Shape
       frequency: Oscillator.Frequency
       isActive: boolean
       id?: Oscillator.Id
       detune?: Oscillator.Detune
       i18n?: I18n
     }
-  }
-  declare namespace UIFilter {
-    interface Props {
-      type: Filter.Type
-      frequency: Filter.Frequency
-      isActive: boolean
-      id?: Filter.Id
-      detune?: Filter.Detune
-      quality?: Filter.Quality
-      gain?: Filter.Gain
-      i18n?: I18n,
-      onChange?: (event) => void
-    }
+
     interface State {
       id?: Id
-      type?: Filter.Type
-      frequency?: Filter.Frequency
-      gain?: Filter.Gain
-      detune?: Filter.Detune
-      quality?: Filter.Quality
+      shape?: Oscillator.Shape
+      frequency?: Oscillator.Frequency
       isActive?: boolean
     }
   }
 
-  declare namespace UISliderInput {
-    interface Props {
-      min: number,
-      max: number,
-      name?: string,
-      value?: number,
-      onChange: (event: ChangeEvent<HTMLInputElement>) => void
-    }
+  declare interface FilterInputProps {
+    type: Filter.Type;
+    frequency: Filter.Frequency;
+    isActive: boolean
+    id?: Filter.Id
+    detune?: Filter.Detune
+    quality?: Filter.Quality
+    gain?: Filter.Gain
+    i18n?: I18n,
+    onChange?: (event) => void
   }
 
-  declare namespace UIFrequencyRangeInput {
-    interface Props {
-      i18n?: I18n,
-      value?: Oscillator.Frequency
-      onChange: (event: ChangeEvent<HTMLInputElement>) => void
-    }
+  declare interface SliderInputProps {
+    min: number;
+    max: number;
+    name?: string;
+    value?: number;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   }
 
-  declare namespace UIWaveTypeInput {
-    interface Props {
-      i18n?: I18n,
-      value?: Oscillator.Type
-      onChange: (event: ChangeEvent<HTMLInputElement>) => void
-    }
+  declare interface FrequencyRangeInputProps {
+    i18n?: I18n;
+    value?: Oscillator.Frequency;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   }
 
-  declare namespace UIMidi {
-    interface Props {
-      i18n?: I18n,
-      devices: MidiInput[]
-    }
+  declare interface WaveShapeInputProps {
+    i18n?: I18n;
+    value?: Oscillator.Shape;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   }
 
-  // END UI COMPONENTS
+  declare interface MidiInputsProps {
+    i18n?: I18n;
+    devices: MidiInput[];
+  }
+
+  // END  COMPONENTS
 }

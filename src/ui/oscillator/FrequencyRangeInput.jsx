@@ -22,7 +22,7 @@ const sliderInputStyle = {
   width: '100%'
 }
 
-class UIFrequencyRange extends React.PureComponent {
+class FrequencyRange extends React.PureComponent {
   /** @type {Synth.UIFrequencyRangeInput.Props} */
   static defaultProps = {
     value: 50,
@@ -35,7 +35,7 @@ class UIFrequencyRange extends React.PureComponent {
   }
 
   render () {
-    logger.debug(this.props, 'UIFrequencyRange.render')
+    logger.debug(this.props, 'FrequencyRange.render')
 
     return (
       <div className='frequency-range' style={sliderStyle}>
@@ -54,4 +54,4 @@ class UIFrequencyRange extends React.PureComponent {
   }
 }
 
-export default UIFrequencyRange
+export default FrequencyRange

@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import oscillatorActions from '../state/oscillators/actions'
 import filterActions from '../state/filters/actions'
-import UIOscillator from './oscillator/UIOscillator'
-import UITransport from './transport/UITransport'
-import UIFilter from './filter/UIFilter'
-import UIMidi from './midi/UIMidi'
+import OscillatorsInput from './oscillator/OscillatorsInput'
+import TransportInput from './transport/TransportInput'
+import FilterInput from './filter/FilterInput'
+// import MidiInput from './midi/MidiInput'
 import logger from '../lib/logger'
+import Oscillator from '../lib/oscillators/Oscillator';
+import Filter from '../lib/filters/Filter'
 
 /** @type {Synth.I18n} */
 const defaultI18n = {
@@ -18,7 +20,8 @@ const synthStyle = {
   padding: '1rem'
 }
 
-export class App extends React.PureComponent {
+export class App extends PureComponent {
+  /** @type {{ oscillators: Oscillator[], filters: Filter[], i18n: Synth.I18n }} */
   static defaultProps = {
     oscillators: [],
     filters: [],
@@ -33,13 +36,19 @@ export class App extends React.PureComponent {
   }
 
   get oscillators () {
+    const { oscillators } = this.props;
+
     return (
       <section className='oscillators'>
         <button onClick={this.props.oscillatorAdd}>
           {this.i18n.ADD_OSCILLATOR}
         </button>
-        {this.props.oscillators.map(oscillator => (
-          <UIOscillator key={oscillator.id} {...oscillator} />
+        {oscillators.map(oscillator => (
+          <OscillatorsInput
+            key={oscillator.id}
+            frequency={oscillator.frequency}
+            shape={oscillator.shape}
+          />
         ))}
       </section>
     )
@@ -52,7 +61,7 @@ export class App extends React.PureComponent {
           {this.i18n.ADD_FILTER}
         </button>
         {this.props.filters.map(filter => (
-          <UIFilter key={filter.id} {...filter} />
+          <FilterInput key={filter.id} {...filter} />
         ))}
       </section>
     )
@@ -63,10 +72,10 @@ export class App extends React.PureComponent {
 
     return (
       <section className='synth' style={synthStyle}>
-        <UITransport />
+        <TransportInput />
         {this.filters}
         {this.oscillators}
-        <UIMidi />
+        {/* <MidiInput /> */}
       </section>
     )
   }

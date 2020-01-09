@@ -25,7 +25,7 @@ function add () {
 }
 
 /**
- * @param {Synth.UIOscillator.State} payload
+ * @param {Synth.OscillatorsInput.State} payload
  * @returns {Redux.Action}
  */
 function update (payload) {
@@ -36,7 +36,7 @@ function update (payload) {
 }
 
 /**
- * @param {Synth.UIOscillator.State} payload
+ * @param {Synth.OscillatorsInput.State} payload
  * @returns {Redux.Action}
  */
 function remove (payload) {

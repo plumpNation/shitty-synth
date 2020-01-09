@@ -1,12 +1,14 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import logger from '../../lib/logger'
 import Filter from '../../lib/filters/Filter'
 
 import filterActions from '../../state/filters/actions'
 
-import UISliderInput from '../common/UISliderInput/UISliderInput'
+import SliderInput from '../common/SliderInput'
+
+import { filterInput } from './FilterInput.styl'
 
 const defaultI18n = {
   FILTER: 'Filter',
@@ -17,38 +19,33 @@ const defaultI18n = {
   DETUNE: 'Detune'
 }
 
-const filterStyle = {
-  display: 'flex',
-  width: '300px'
-}
-
-class UIFilter extends React.PureComponent {
-  /** @type {Synth.UIFilter.Props} */
+class FilterInput extends React.PureComponent {
+  /** @type {Synth.Filter.Props} */
   static defaultProps = {
     frequency: 100,
     type: Filter.LOW_PASS,
     i18n: defaultI18n,
     isActive: true,
-    onChange: event => undefined
+    onChange: (_) => undefined
   }
 
-  updateType = event => {
+  updateType = (event) => {
     this.props.onUpdated({id: this.props.id, type: event.target.value})
   }
 
-  updateFrequency = event => {
+  updateFrequency = (event) => {
     this.props.onUpdated({id: this.props.id, frequency: event.target.value})
   }
 
-  updateQuality = event => {
+  updateQuality = (event) => {
     this.props.onUpdated({id: this.props.id, quality: event.target.value})
   }
 
-  updateDetune = event => {
+  updateDetune = (event) => {
     this.props.onUpdated({id: this.props.id, detune: event.target.value})
   }
 
-  updateGain = event => {
+  updateGain = (event) => {
     this.props.onUpdated({id: this.props.id, gain: event.target.value})
   }
 
@@ -59,7 +56,7 @@ class UIFilter extends React.PureComponent {
   sliders = () => {
     return (
       <div className="filter-sliders">
-        <UISliderInput
+        <SliderInput
           name={this.i18n.FREQUENCY}
           onChange={this.updateFrequency}
           min={0}
@@ -67,7 +64,7 @@ class UIFilter extends React.PureComponent {
           value={this.props.frequency}
         />
 
-        <UISliderInput
+        <SliderInput
           name={this.i18n.DETUNE}
           onChange={this.updateDetune}
           min={0}
@@ -75,7 +72,7 @@ class UIFilter extends React.PureComponent {
           value={this.props.detune}
         />
 
-        <UISliderInput
+        <SliderInput
           name={this.i18n.GAIN}
           onChange={this.updateGain}
           min={0}
@@ -83,7 +80,7 @@ class UIFilter extends React.PureComponent {
           value={this.props.gain}
         />
 
-        <UISliderInput
+        <SliderInput
           name={this.i18n.QUALITY}
           onChange={this.updateQuality}
           min={0}
@@ -96,7 +93,7 @@ class UIFilter extends React.PureComponent {
 
   controls = () => {
     return (
-      <div className='filter-controls'>
+      <div className={filterInput}>
         <button onClick={this.remove}>{this.i18n.REMOVE}</button>
       </div>
     )
@@ -107,10 +104,10 @@ class UIFilter extends React.PureComponent {
   }
 
   render () {
-    logger.debug(this.props, 'UIFilter.render')
+    logger.debug(this.props, 'Filter.render')
 
     return (
-      <fieldset className='filter' style={filterStyle}>
+      <fieldset className='filter-input'>
         <legend>
           {this.i18n.FILTER}: {this.props.type}
         </legend>
@@ -121,10 +118,10 @@ class UIFilter extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(UIFilter)
+export default connect(mapStateToProps, mapDispatchToProps())(FilterInput)
 
 function mapStateToProps (state) {
-  logger.debug(state, 'UIOscillator.mapStateToProps')
+  logger.debug(state, 'OscillatorsInput.mapStateToProps')
 
   return {
     filters: state.filters
@@ -132,7 +129,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps () {
-  logger.debug('UIOscillator.mapDispatchToProps')
+  logger.debug('OscillatorsInput.mapDispatchToProps')
 
   return {
     onUpdated: filterActions.update,

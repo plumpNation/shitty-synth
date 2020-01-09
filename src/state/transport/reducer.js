@@ -9,7 +9,7 @@ const defaultState = {
 /**
  * @param {Synth.Transport.State} state
  * @param {Redux.Action} action
- * @returns {Redux.Reducer}
+ * @returns {Synth.Transport.State}
  */
 function reducer (state = defaultState, action) {
   switch (action.type) {

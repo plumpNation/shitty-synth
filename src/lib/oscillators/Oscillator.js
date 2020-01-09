@@ -8,20 +8,20 @@ class Oscillator {
    */
   constructor (props) {
     const {
-      type = Oscillator.SQUARE,
+      connection,
+      shape = Oscillator.SQUARE,
       frequency = 100,
       detune = 0,
-      connection = {},
-      audioContext = new AudioContext()
+      audioContext = new AudioContext(),
     } = props
 
-    /** @type {Synth.Oscillator.Type} */
-    this._type = type
+    /** @type {Synth.Oscillator.Shape} */
+    this._shape = shape
     /** @type {Synth.Oscillator.Detune} */
     this._detune = detune
     /** @type {Synth.Oscillator.Frequency} */
     this._frequency = frequency
-    /** @type {Synth.Connection.Object} */
+    /** @type {Synth.Oscillator.Connection} */
     this._connection = connection
 
     /** @type {AudioContext} */
@@ -32,21 +32,21 @@ class Oscillator {
     this.oscillator = this.audioContext.createOscillator()
 
     // these should be set after the oscillator is created
-    this.type = this._type
+    this.shape = this._shape
     this.detune = this._detune
     this.frequency = this._frequency
 
     if (this._connection) {
-      this.setConnection(this._connection)
+      this.connection = this._connection
     }
 
     this.oscillator.start()
   }
 
   /**
-   * @param {Synth.Connection.Object} params
+   * @param {Synth.Oscillator.Connection} params
    */
-  setConnection({output, outputIndex, inputIndex}) {
+  set connection({output, outputIndex, inputIndex}) {
     this.oscillator.connect(output, outputIndex, inputIndex)
   }
 
@@ -64,10 +64,10 @@ class Oscillator {
     if (this.oscillator) this.oscillator.detune.value = detune
   }
 
-  set type (type) {
-    this._type = type
+  set shape (shape) {
+    this._shape = shape
 
-    if (this.oscillator) this.oscillator.type = type
+    if (this.oscillator) this.oscillator.type = shape
   }
 
   set frequency (frequency) {
@@ -82,15 +82,15 @@ class Oscillator {
   }
 }
 
-/** @type {Synth.Oscillator.Type} */
+/** @type {Synth.Oscillator.Shape} */
 Oscillator.SINE = 'sine';
-/** @type {Synth.Oscillator.Type} */
+/** @type {Synth.Oscillator.Shape} */
 Oscillator.SQUARE = 'square';
-/** @type {Synth.Oscillator.Type} */
+/** @type {Synth.Oscillator.Shape} */
 Oscillator.SAWTOOTH = 'sawtooth';
-/** @type {Synth.Oscillator.Type} */
+/** @type {Synth.Oscillator.Shape} */
 Oscillator.TRIANGLE = 'triangle';
-/** @type {Synth.Oscillator.Type} */
+/** @type {Synth.Oscillator.Shape} */
 Oscillator.CUSTOM = 'custom';
 
 export default Oscillator

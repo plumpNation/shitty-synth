@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 
-import {sliderContainer, slider, sliderInput} from './UISliderInput.styl';
+import {sliderContainer, slider, sliderInput} from './SliderInput.styl';
 
 import logger from '../../../lib/logger'
 
-class UIFrequencyRange extends React.PureComponent {
-  /** @type {Synth.UISliderInput.Props} */
+class FrequencyRange extends PureComponent {
+  /** @type {Synth.SliderInputProps} */
   static defaultProps = {
     min: 0,
     max: 100,
     value: 50,
     name: 'Slider',
-    onChange: event => undefined
+    onChange: (_) => undefined
   }
 
   render () {
-    logger.debug(this.props, 'UIFrequencyRange.render')
+    logger.debug(this.props, 'FrequencyRange.render')
 
     return (
       <div className={sliderContainer}>
@@ -35,4 +35,4 @@ class UIFrequencyRange extends React.PureComponent {
   }
 }
 
-export default UIFrequencyRange
+export default FrequencyRange

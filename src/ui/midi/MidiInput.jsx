@@ -8,8 +8,8 @@ const defaultI18n = {
   DEVICES: 'devices'
 }
 
-export class UIMidi extends React.PureComponent {
-  /** @type {Synth.UIMidi.Props} */
+export class MidiInputs extends React.PureComponent {
+  /** @type {Synth.MidiInputs.Props} */
   static defaultProps = {
     devices: []
   }
@@ -33,7 +33,7 @@ export class UIMidi extends React.PureComponent {
   }
 
   render () {
-    logger.debug('UIMidi.render')
+    logger.debug('Midi.render')
 
     return (
       <section className='midi'>
@@ -45,16 +45,16 @@ export class UIMidi extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(UIMidi)
+export default connect(mapStateToProps, mapDispatchToProps())(MidiInputs)
 
 function mapStateToProps (state) {
-  logger.debug(state, 'UIMidi.mapStateToProps')
+  logger.debug(state, 'Midi.mapStateToProps')
 
   return {...state.midi}
 }
 
 function mapDispatchToProps () {
-  // logger.debug('UIMidi.mapDispatchToProps')
+  // logger.debug('Midi.mapDispatchToProps')
 
   return {}
 }

@@ -1,11 +1,15 @@
-// var filter = context.createBiquadFilter(); filter.type = 3; // In this case it's a lowshelf filter filter.frequency.value = 440; filter.Q.value = 0; filter.gain.value = 0;
+// In this case it's a lowshelf filter
+// var filter = context.createBiquadFilter();
+// filter.type = 3;
+// filter.frequency.value = 440;
+// filter.Q.value = 0;
+// filter.gain.value = 0;
 
 /**
  * Facades the Web Audio API
  */
 class Filter {
   /**
-   *
    * @param {Synth.Filter.Props} props
    */
   constructor (props) {
@@ -37,7 +41,6 @@ class Filter {
   }
 
   set connection (output) {
-    // @todo extract the connection
     this.filter.connect(output)
   }
 
@@ -49,11 +52,15 @@ class Filter {
     if (this.filter) this.filter.type = type
   }
 
+  get type() {
+    return this.filter.type;
+  }
+
   /**
    *
    * @param {Synth.Filter.Frequency} frequency
    */
-  updateFrequency (frequency) {
+  set frequency (frequency) {
     this.frequency = frequency
 
     if (this.filter) {
@@ -64,11 +71,15 @@ class Filter {
     }
   }
 
+  get frequency() {
+    return this.filter.frequency.value;
+  }
+
   /**
    *
    * @param {Synth.Filter.Gain} gain
    */
-  updateGain (gain) {
+  set gain (gain) {
     if (this.filter) {
       this.filter.gain.setValueAtTime(
         gain,
@@ -77,24 +88,35 @@ class Filter {
     }
   }
 
+  get gain() {
+    return this.filter.gain.value;
+  }
+
   /**
-   *
    * @param {Synth.Filter.Quality} quality
    */
-  updateQuality (quality) {
+  set quality (quality) {
     if (this.filter) {
       this.filter.Q.value = quality;
     }
+  }
+
+  get quality() {
+    return this.filter.Q.value;
   }
 
   /**
    *
    * @param {Synth.Filter.Detune} detune
    */
-  updateDetune (detune) {
+  set detune (detune) {
     if (this.filter) {
       this.filter.detune.value = detune;
     }
+  }
+
+  get detune() {
+    return this.filter.detune.value;
   }
 }
 

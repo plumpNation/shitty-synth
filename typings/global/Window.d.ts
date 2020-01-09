@@ -2,7 +2,7 @@ import redux from 'redux';
 
 declare global {
   interface Window {
-    devToolsExtension(): redux.StoreEnhancer<any>
+    __REDUX_DEVTOOLS_EXTENSION__(): redux.StoreEnhancer<any>
   }
 }
 

@@ -25,7 +25,7 @@ function add () {
 }
 
 /**
- * @param {Synth.UIFilter.State} payload
+ * @param {Synth.Filter.State} payload
  * @returns {Redux.Action}
  */
 function update (payload) {
@@ -36,7 +36,7 @@ function update (payload) {
 }
 
 /**
- * @param {Synth.UIFilter.State} payload
+ * @param {Synth.Filter.State} payload
  * @returns {Redux.Action}
  */
 function remove (payload) {
